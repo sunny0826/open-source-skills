@@ -1,0 +1,33 @@
+{
+  "$schema": "https://code.claude.com/schemas/marketplace.json",
+  "name": "open-source-skills",
+  "owner": {
+    "name": "sunny0826",
+    "url": "https://github.com/sunny0826"
+  },
+  "metadata": {
+    "description": "Open Source related skills",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "open-source-license",
+      "description": "Open Source License guidance, selection, compliance review, and drafting. Covers MIT, Apache, GPL, BSD, LGPL, AGPL, MPL, copyleft, permissive licenses, license compatibility, SPDX identifiers, and Mulan PSL v2. Use when choosing open source licenses, checking license compatibility, reviewing projects for OSS compliance, or generating LICENSE/NOTICE files.",
+      "source": "./skills/open-source-license",
+      "category": "legal",
+      "keywords": [
+        "license",
+        "open-source",
+        "compliance",
+        "MIT",
+        "Apache",
+        "GPL",
+        "Mulan-PSL-v2",
+        "SPDX"
+      ],
+      "skills": [
+        "./skills/open-source-license"
+      ]
+    }
+  ]
+}
