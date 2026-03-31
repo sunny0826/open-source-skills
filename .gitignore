@@ -23,4 +23,5 @@ __pycache__/
 .augment/
 .cache/
 .trae/
+.claude/
 skills-lock.json
