@@ -4,7 +4,7 @@
 
 ## Quick Start
 
-如果本仓库已经发布到 skills.sh 兼容的 GitHub 仓库，可以直接用：
+快速安装 `open-source-license`：
 
 ```bash
 npx skills add sunny0826/open-source-skills --skill open-source-license
@@ -49,7 +49,7 @@ cp -R skills/open-source-license .claude/skills/
 如果仓库已经发布到 skills.sh 生态，优先推荐直接安装整个 skills 仓库：
 
 ```bash
-npx skills add sunny0826/open-source-skills
+npx skills add sunny0826/open-source-skills --skill open-source-license
 ```
 
 如果你只想手动安装 `open-source-license`，把下面目录复制到你的 skills 目录即可：
@@ -78,17 +78,6 @@ cp -R skills/open-source-license ~/.claude/skills/
 ```bash
 mkdir -p .claude/skills
 cp -R skills/open-source-license .claude/skills/
-```
-
-### 从远程仓库安装
-
-如果不通过 `npx skills add <owner/repo>` 自动安装，也可以手动克隆后复制：
-
-```bash
-git clone https://github.com/sunny0826/open-source-skills.git
-cd open-source-skills
-mkdir -p ~/.claude/skills
-cp -R skills/open-source-license ~/.claude/skills/
 ```
 
 ## Usage
@@ -149,17 +138,3 @@ skills/
 - `README.md`：安装与使用说明
 - `references/`：配套参考资料
 - `evals/evals.json`：评测样例
-
-## Use Cases
-
-这个仓库适合：
-
-- 想维护一组团队内部或公开发布的 skills
-- 想把某个专业领域知识沉淀成独立 skill 的开发者
-- 希望边开发边测试 skill 效果的人
-
-## Current Status
-
-- 当前已包含 `open-source-license`
-- 该 skill 已对齐上游结构并补充木兰宽松许可证第 2 版支持
-- 仓库结构已经可继续扩展更多独立 skill
