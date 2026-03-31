@@ -5,6 +5,10 @@
     "name": "sunny0826",
     "url": "https://github.com/sunny0826"
   },
+  "metadata": {
+    "description": "Open Source related skills",
+    "version": "1.0.0"
+  },
   "plugins": [
     {
       "name": "open-source-license",
