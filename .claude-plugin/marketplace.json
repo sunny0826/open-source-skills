@@ -28,6 +28,43 @@
       "skills": [
         "./skills/open-source-license"
       ]
+    },
+    {
+      "name": "open-source-analysis",
+      "description": "Analyze an open source GitHub repository and generate a structured report. Includes tech stack, programming languages, stats (stars/forks), license, and ratings (active development, documentation quality, community activity, ease of use). Supports English and Chinese output based on user prompt.",
+      "source": "./skills/open-source-analysis",
+      "category": "developer_tools",
+      "keywords": [
+        "analysis",
+        "github",
+        "repository",
+        "open-source",
+        "report",
+        "stats",
+        "rating"
+      ],
+      "skills": [
+        "./skills/open-source-analysis"
+      ]
+    },
+    {
+      "name": "openrank-metrics",
+      "description": "Fetch and analyze OpenRank and other statistical metrics (Activity, Stars, Technical Fork, Attention) for an open source repository or developer using OpenDigger data. Supports checking latest metrics, recent trends, and fetching comprehensive data tables for specific periods (e.g., 2024, 2023-05).",
+      "source": "./skills/openrank-metrics",
+      "category": "developer_tools",
+      "keywords": [
+        "openrank",
+        "opendigger",
+        "metrics",
+        "activity",
+        "github",
+        "gitee",
+        "statistics",
+        "contributors"
+      ],
+      "skills": [
+        "./skills/openrank-metrics"
+      ]
     }
   ]
 }
