@@ -65,6 +65,184 @@
       "skills": [
         "./skills/openrank-metrics"
       ]
+    },
+    {
+      "name": "git-helper",
+      "description": "A comprehensive Git command assistant and workflow guide. Use when you need to understand specific Git operations, want to fix a Git mistake, or need guidance on workflows like branching, rebasing, or squashing.",
+      "source": "./skills/git-helper",
+      "category": "developer_tools",
+      "keywords": [
+        "git",
+        "version-control",
+        "commands",
+        "workflow",
+        "rebase",
+        "reset",
+        "reflog",
+        "merge"
+      ],
+      "skills": [
+        "./skills/git-helper"
+      ]
+    },
+    {
+      "name": "pr-description",
+      "description": "Automatically generate a structured, high-quality Pull Request (PR) description based on the git diff or provided code changes. Use when writing a PR description, summarizing changes, or preparing a commit message.",
+      "source": "./skills/pr-description",
+      "category": "developer_tools",
+      "keywords": [
+        "pr",
+        "pull-request",
+        "description",
+        "diff",
+        "summary",
+        "git",
+        "code-review"
+      ],
+      "skills": [
+        "./skills/pr-description"
+      ]
+    },
+    {
+      "name": "release-notes",
+      "description": "Generate structured, professional Release Notes / Changelog from a GitHub release compare URL or a raw commit log. Automatically categorizes commits into Breaking Changes, Features, and Fixes while filtering out noise.",
+      "source": "./skills/release-notes",
+      "category": "developer_tools",
+      "keywords": [
+        "release",
+        "changelog",
+        "notes",
+        "github",
+        "commits",
+        "versioning",
+        "documentation"
+      ],
+      "skills": [
+        "./skills/release-notes"
+      ]
+    },
+    {
+      "name": "issue-triage",
+      "description": "Analyze GitHub issue content, assess its priority, identify missing information, and provide clear reproduction steps or triage advice. Trigger when the user asks to triage an issue, analyze a bug report, or asks 'how should I respond to this issue'.",
+      "source": "./skills/issue-triage",
+      "category": "developer_tools",
+      "keywords": [
+        "issue",
+        "triage",
+        "bug",
+        "report",
+        "github",
+        "priority",
+        "maintainer"
+      ],
+      "skills": [
+        "./skills/issue-triage"
+      ]
+    },
+    {
+      "name": "dockerfile-optimizer",
+      "description": "Review and optimize Dockerfiles to reduce layer count, minimize image size, and improve build times. Use when reviewing a Dockerfile, making a Docker image smaller, speeding up a build, or asking for Docker best practices.",
+      "source": "./skills/dockerfile-optimizer",
+      "category": "developer_tools",
+      "keywords": [
+        "docker",
+        "dockerfile",
+        "optimize",
+        "size",
+        "build-time",
+        "layers",
+        "devops"
+      ],
+      "skills": [
+        "./skills/dockerfile-optimizer"
+      ]
+    },
+    {
+      "name": "contributor-guide-writer",
+      "description": "Analyze the current project structure, package manager, and build tools to generate a comprehensive, standardized CONTRIBUTING.md file. Trigger when asking to write a contributing guide or setup instructions.",
+      "source": "./skills/contributor-guide-writer",
+      "category": "developer_tools",
+      "keywords": [
+        "contributing",
+        "guide",
+        "open-source",
+        "setup",
+        "documentation",
+        "workflow"
+      ],
+      "skills": [
+        "./skills/contributor-guide-writer"
+      ]
+    },
+    {
+      "name": "rfc-writer",
+      "description": "Draft a technical Request for Comments (RFC) or technical proposal document based on a rough idea or scattered requirements. Triggers when asking to write an RFC, technical proposal, or architecture design.",
+      "source": "./skills/rfc-writer",
+      "category": "developer_tools",
+      "keywords": [
+        "rfc",
+        "proposal",
+        "architecture",
+        "design",
+        "document",
+        "planning"
+      ],
+      "skills": [
+        "./skills/rfc-writer"
+      ]
+    },
+    {
+      "name": "cli-help-writer",
+      "description": "Generate standard, beautifully formatted `--help` documentation for Command Line Interface (CLI) tools based on raw arguments, flags, and descriptions. Triggers when asking to write help text, format CLI options, or generate a man page.",
+      "source": "./skills/cli-help-writer",
+      "category": "developer_tools",
+      "keywords": [
+        "cli",
+        "help",
+        "command-line",
+        "options",
+        "flags",
+        "terminal",
+        "usage"
+      ],
+      "skills": [
+        "./skills/cli-help-writer"
+      ]
+    },
+    {
+      "name": "prompt-reviewer",
+      "description": "Review a prompt to identify ambiguities, missing constraints, and hallucination risks, and provide an optimized version. Triggers when asking to review, optimize, or improve a prompt.",
+      "source": "./skills/prompt-reviewer",
+      "category": "developer_tools",
+      "keywords": [
+        "prompt",
+        "review",
+        "optimize",
+        "hallucination",
+        "ambiguity",
+        "engineering"
+      ],
+      "skills": [
+        "./skills/prompt-reviewer"
+      ]
+    },
+    {
+      "name": "readme-grader",
+      "description": "Evaluate a project's README file (or repository URL), score it out of 100 based on standard open-source best practices, and provide specific, actionable improvement suggestions. Triggers when asking to grade, review, or score a README.",
+      "source": "./skills/readme-grader",
+      "category": "developer_tools",
+      "keywords": [
+        "readme",
+        "grade",
+        "review",
+        "score",
+        "open-source",
+        "documentation",
+        "maintainer"
+      ],
+      "skills": [
+        "./skills/readme-grader"
+      ]
     }
   ]
 }
