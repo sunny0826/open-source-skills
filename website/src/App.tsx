@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Terminal, Copy, Check, Github, Code2, Sparkles, Globe } from 'lucide-react';
 import { skills } from './data/skills';
@@ -13,7 +13,7 @@ const translations = {
     heroTitlePart2: 'Open Source Workflow',
     heroDesc: 'A suite of open-source tools for license comparison, project analysis, maintenance utilities, and more.',
     copyInstall: 'Copy installation command',
-    inspiredBy: 'Supported by these AI Agents & Tools',
+    inspiredBy: 'Supported AI Agents & Tools',
     skillsTitle: 'Available Skills',
     category: 'Category',
     copied: 'Copied',
