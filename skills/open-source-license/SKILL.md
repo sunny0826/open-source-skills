@@ -1,15 +1,7 @@
 ---
 name: "open-source-license"
 description: "Open Source License guidance, selection, compliance review, and drafting. Use this skill when users ask about choosing open source licenses, checking license compatibility, reviewing projects for OSS compliance, generating LICENSE/NOTICE files, or understanding specific license terms. Triggers include questions about MIT, Apache, GPL, BSD, LGPL, AGPL, MPL, copyleft, permissive licenses, license compatibility, SPDX identifiers, 木兰宽松许可证, Mulan PSL v2, or any OSS licensing topic."
-metadata:
-  author: "Skala Inc."
-  license: "Apache-2.0"
-  license-notice: "See LICENSE and NOTICE files in the repository"
-  homepage: "https://skala.io/legal-skills"
-  repository: "https://github.com/skala-io/legal-skills"
 ---
-
-*First published on [Skala Legal Skills](https://www.skala.io/legal-skills)*
 
 ## Legal Disclaimer
 

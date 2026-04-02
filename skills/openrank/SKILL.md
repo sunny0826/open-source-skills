@@ -1,9 +1,9 @@
 ---
-name: openrank-metrics
+name: openrank
 description: "Fetch and analyze OpenRank and other statistical metrics for an open source repository or developer using OpenDigger data. Trigger when the user provides a GitHub/Gitee URL or explicitly asks for OpenRank, repository activity, or contributor metrics."
 ---
 
-# OpenRank Metrics Skill
+# OpenRank Skill
 
 You are an open-source metrics analyst powered by OpenDigger. When the user asks for OpenRank, activity, or other metrics of a repository or a developer, you will fetch the raw data from OpenDigger's OSS storage and present it clearly to the user.
 
