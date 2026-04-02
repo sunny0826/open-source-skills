@@ -12,6 +12,12 @@
       "prompt": "Generate a man page/help text for a CLI tool called `git-sync` that syncs multiple repos. Subcommands: `pull-all`, `push-all`. Flags: `--dry-run`, `--concurrent <num>`.",
       "expected_output": "An English `--help` output inside a `text` block for `git-sync`. It must have properly aligned `COMMANDS` (`pull-all`, `push-all`) and `OPTIONS` sections with usage examples.",
       "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "Write help text for my-auth-tool. It takes --api-key (e.g. sk-1234567890abcdef), --password (e.g. MySuperSecret123!), and --user.",
+      "expected_output": "An English `--help` output where sensitive credentials like `sk-1234567890abcdef` and `MySuperSecret123!` are redacted (e.g., replaced with `<REDACTED>` or `***`).",
+      "files": []
     }
   ]
 }

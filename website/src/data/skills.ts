@@ -1,4 +1,4 @@
-import { FileText, ShieldCheck, Activity, GitBranch, GitMerge, FileSignature, AlertCircle, Box, BookOpen, FileJson, Terminal, CheckSquare } from 'lucide-react';
+import { FileText, ShieldCheck, Activity, GitBranch, GitMerge, FileSignature, AlertCircle, Box, BookOpen, Terminal, CheckSquare } from 'lucide-react';
 
 export interface Skill {
   id: string;
@@ -57,7 +57,7 @@ export const skills: Skill[] = [
     name: 'pr-description',
     description: {
       en: 'Automatically generate standardized Pull Request (PR) Descriptions with checkboxes based on Git diff content or text descriptions.',
-      zh: '自动根据 Git diff 内容或文字描述，生成规范的、包含复选框的 Pull Request (PR) Description。'
+      zh: '自动根据 Git diff 纯文本内容或文字描述，生成规范的、包含复选框的 Pull Request (PR) Description。'
     },
     category: 'developer_tools',
     icon: GitMerge
@@ -66,8 +66,8 @@ export const skills: Skill[] = [
     id: 'release-notes',
     name: 'release-notes',
     description: {
-      en: 'Extract and generate structured release notes from GitHub Compare links or commit history, automatically categorizing Breaking Changes / Features / Fixes.',
-      zh: '从 GitHub Compare 链接或 commit 记录中提取并生成结构化的发版说明，自动进行 Breaking Change / Feature / Fix 分类。'
+      en: 'Extract and generate structured release notes from commit history text, automatically categorizing Breaking Changes / Features / Fixes.',
+      zh: '从 commit 记录纯文本中提取并生成结构化的发版说明，自动进行 Breaking Change / Feature / Fix 分类。'
     },
     category: 'developer_tools',
     icon: FileSignature
@@ -77,7 +77,7 @@ export const skills: Skill[] = [
     name: 'issue-triage',
     description: {
       en: 'Analyze GitHub Issue content to automatically assess priority, check for missing information, and generate polite, professional response templates.',
-      zh: '分析 GitHub Issue 内容，自动评估优先级、检查缺失信息并生成礼貌的专业回复模板。'
+      zh: '分析 GitHub Issue 文本内容，自动评估优先级、检查缺失信息并生成礼貌的专业回复模板。'
     },
     category: 'developer_tools',
     icon: AlertCircle
@@ -136,8 +136,8 @@ export const skills: Skill[] = [
     id: 'readme-grader',
     name: 'readme-grader',
     description: {
-      en: 'Evaluate open source project READMEs, score them across 5 dimensions (overview, installation, usage, contributing, etc.), and provide specific improvement suggestions.',
-      zh: '评估开源项目 README，从简介、安装、使用、贡献等 5 个维度打分并提供具体的改进建议。'
+      en: 'Evaluate open source project README texts, score them across 5 dimensions (overview, installation, usage, contributing, etc.), and provide specific improvement suggestions.',
+      zh: '评估开源项目 README 文本，从简介、安装、使用、贡献等 5 个维度打分并提供具体的改进建议。'
     },
     category: 'developer_tools',
     icon: CheckSquare

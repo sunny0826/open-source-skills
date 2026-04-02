@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Terminal, Copy, Check, Github, Code2, Sparkles, Globe } from 'lucide-react';
 import { skills } from './data/skills';

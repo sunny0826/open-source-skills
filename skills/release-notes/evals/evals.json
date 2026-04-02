@@ -9,8 +9,8 @@
     },
     {
       "id": 2,
-      "prompt": "Generate a changelog for this compare URL: https://github.com/vuejs/core/compare/v3.4.0...v3.4.1",
-      "expected_output": "An English release notes document that dynamically fetches commits from the provided GitHub compare URL. It should categorize them into Features and Bug Fixes.",
+      "prompt": "Generate a changelog for these commits:\nfeat: add dark mode support\nfix: resolve memory leak in worker thread\ndocs: update installation guide",
+      "expected_output": "An English release notes document that categorizes the provided commits into Features and Bug Fixes. The 'docs' commit should be ignored.",
       "files": []
     }
   ]

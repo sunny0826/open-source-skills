@@ -87,3 +87,4 @@ EXAMPLES:
   ```
 - **Infer Missing Info:** If the user mentions "needs a port", invent a standard flag like `-p, --port <number>` with a reasonable default (e.g., `8080`).
 - **Terminal Realism:** Do not use bold (`**`) or italics (`*`) inside the `text` code block, as standard terminals do not render Markdown. Use uppercase letters for headers (e.g., `OPTIONS:`).
+- **Redact Sensitive Information:** If the user supplies real API keys, passwords, tokens, or other sensitive credentials in their examples or default values, redact them (e.g., replace with `<REDACTED>` or `***`) before generating the help text. Never echo sensitive credentials verbatim.

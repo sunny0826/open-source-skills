@@ -18,15 +18,15 @@ npx skills add sunny0826/open-source-skills
 | `open-source-analysis` | `skills/open-source-analysis/` | 分析 GitHub 开源项目并生成包含技术栈、数据、活跃度评分及多维度评价的结构化分析报告（支持中英双语）。 | [README](./skills/open-source-analysis/README.md) |
 | `openrank-metrics` | `skills/openrank-metrics/` | 基于 OpenDigger 数据源，查询 GitHub/Gitee 开源项目或开发者的 OpenRank 值、活跃度等各项统计指标，并支持按指定周期生成指标全貌表格。 | [README](./skills/openrank-metrics/README.md) |
 | `git-helper` | `skills/git-helper/` | 详尽的 Git 命令助手与工作流指南。支持按需翻译意图为具体命令，并针对破坏性操作提供安全警告。 | [README](./skills/git-helper/README.md) |
-| `pr-description` | `skills/pr-description/` | 自动根据 Git diff 内容或文字描述，生成规范的、包含复选框的 Pull Request (PR) Description。 | [README](./skills/pr-description/README.md) |
-| `release-notes` | `skills/release-notes/` | 从 GitHub Compare 链接或 commit 记录中提取并生成结构化的发版说明，自动进行 Breaking Change / Feature / Fix 分类。 | [README](./skills/release-notes/README.md) |
-| `issue-triage` | `skills/issue-triage/` | 分析 GitHub Issue 内容（支持链接或纯文本），自动评估优先级、检查缺失信息（如复现步骤）并生成礼貌的专业回复模板。 | [README](./skills/issue-triage/README.md) |
+| `pr-description` | `skills/pr-description/` | 自动根据 Git diff 纯文本内容或文字描述，生成规范的、包含复选框的 Pull Request (PR) Description。 | [README](./skills/pr-description/README.md) |
+| `release-notes` | `skills/release-notes/` | 从 commit 记录纯文本中提取并生成结构化的发版说明，自动进行 Breaking Change / Feature / Fix 分类。 | [README](./skills/release-notes/README.md) |
+| `issue-triage` | `skills/issue-triage/` | 分析 GitHub Issue 内容（请直接粘贴文本或 markdown 内容），自动评估优先级、检查缺失信息（如复现步骤）并生成礼貌的专业回复模板。 | [README](./skills/issue-triage/README.md) |
 | `dockerfile-optimizer` | `skills/dockerfile-optimizer/` | 审查并重构臃肿、缓慢的 Dockerfile。提供多阶段构建、层缓存优化、无用包清理和非 Root 用户的 DevOps 最佳实践建议。 | [README](./skills/dockerfile-optimizer/README.md) |
 | `contributor-guide-writer` | `skills/contributor-guide-writer/` | 自动分析当前项目结构和构建工具（如 npm/Go/Python），生成量身定制且专业的开源 `CONTRIBUTING.md` 贡献指南。 | [README](./skills/contributor-guide-writer/README.md) |
 | `rfc-writer` | `skills/rfc-writer/` | 将模糊的技术想法扩写为标准的、专业的 RFC（技术提案）文档，自动补全背景、优缺点及替代方案考量。 | [README](./skills/rfc-writer/README.md) |
 | `cli-help-writer` | `skills/cli-help-writer/` | 将零散的命令行参数与说明转化为排版精美、符合 POSIX 标准的终端 `--help` 文案或 Man Page。 | [README](./skills/cli-help-writer/README.md) |
 | `prompt-reviewer` | `skills/prompt-reviewer/` | 审查 Prompt，找出歧义、遗漏约束、潜在幻觉风险，并提供改进建议与优化后的 Prompt。 | [README](./skills/prompt-reviewer/README.md) |
-| `readme-grader` | `skills/readme-grader/` | 评估开源项目 README，从简介、安装、使用、贡献等 5 个维度打分并提供具体的改进建议。 | [README](./skills/readme-grader/README.md) |
+| `readme-grader` | `skills/readme-grader/` | 评估开源项目 README 文本，从简介、安装、使用、贡献等 5 个维度打分并提供具体的改进建议。 | [README](./skills/readme-grader/README.md) |
 
 ## Installation
 
@@ -146,10 +146,6 @@ How do I squash my last 3 commits into one before making a pull request?
 以 `pr-description` 为例，可以直接这样提问：
 
 ```text
-为这个 PR 生成一份中文描述：https://github.com/vuejs/core/pull/10101
-```
-
-```text
 帮我根据这个 diff 生成一份中文的 PR 描述：
 --- a/src/auth.js
 +++ b/src/auth.js
@@ -180,7 +176,9 @@ BREAKING CHANGE: 移除 v1 版本的 API 接口
 ```
 
 ```text
-帮我分诊一下这个 Issue：https://github.com/vuejs/core/issues/11252
+帮我分诊一下这个 Issue：
+标题：组件无法渲染
+内容：在最新版的 Chrome 中，当设置了 props.disabled 时，组件内部的子元素不显示了。
 ```
 
 以 `dockerfile-optimizer` 为例，可以直接这样提问：
@@ -220,7 +218,11 @@ CMD ["npm", "start"]
 以 `readme-grader` 为例，可以直接这样提问：
 
 ```text
-请给 https://github.com/vuejs/core 的 README 打个分并给出具体改进建议。
+请给这段 README 打个分并给出具体改进建议：
+# My Project
+This is a project.
+## Install
+npm install
 ```
 
 ## Repository Structure

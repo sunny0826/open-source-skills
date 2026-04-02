@@ -1,13 +1,13 @@
 # README Grader
 
-The `readme-grader` skill acts as an expert Open Source Maintainer and Developer Advocate. It evaluates a project's README file (or repository URL), scores it out of 100 based on standard open-source best practices, and provides specific, actionable improvement suggestions.
+The `readme-grader` skill acts as an expert Open Source Maintainer and Developer Advocate. It evaluates a project's README file text content, scores it out of 100 based on standard open-source best practices, and provides specific, actionable improvement suggestions.
 
 ## Features
 
 - **Comprehensive Scoring:** Evaluates five dimensions: Project Overview, Quick Start/Installation, Usage/Examples, Contributing & Community, and Structure & Formatting.
 - **Actionable Feedback:** Tells you exactly what is missing and how to fix it to attract more contributors and users.
 - **Optimization Examples:** Provides Markdown snippets showing the suggested improvements.
-- **URL Support:** Simply provide a GitHub repository URL, and the skill will fetch and analyze its README.md automatically.
+- **Security First:** Requires direct text input to prevent indirect prompt injection risks associated with fetching untrusted external URLs.
 
 ## Example Usage
 
