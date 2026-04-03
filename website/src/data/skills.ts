@@ -56,8 +56,8 @@ export const skills: Skill[] = [
     id: 'pr-description',
     name: 'pr-description',
     description: {
-      en: 'Automatically generate standardized Pull Request (PR) Descriptions with checkboxes based on Git diff content or text descriptions.',
-      zh: '自动根据 Git diff 纯文本内容或文字描述，生成规范的、包含复选框的 Pull Request (PR) Description。'
+      en: 'Automatically fetch code diffs to generate standardized PR titles and descriptions, with optional one-click updates to GitHub PRs via gh CLI (permission-aware).',
+      zh: '自动获取代码 Diff 并生成规范的 Pull Request 标题与描述，经权限校验与确认后，支持通过 gh CLI 一键更新至 GitHub PR。'
     },
     category: 'developer_tools',
     icon: GitMerge
