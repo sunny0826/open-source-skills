@@ -24,7 +24,7 @@ npx skills add sunny0826/open-source-skills
 | `dockerfile-optimizer` | `skills/dockerfile-optimizer/` | 审查并重构臃肿、缓慢的 Dockerfile。提供多阶段构建、层缓存优化、无用包清理和非 Root 用户的 DevOps 最佳实践建议。 | [README](./skills/dockerfile-optimizer/README.md) |
 | `contributor-guide-writer` | `skills/contributor-guide-writer/` | 自动分析当前项目结构和构建工具（如 npm/Go/Python），生成量身定制且专业的开源 `CONTRIBUTING.md` 贡献指南。 | [README](./skills/contributor-guide-writer/README.md) |
 | `rfc-writer` | `skills/rfc-writer/` | 将模糊的技术想法扩写为标准的、专业的 RFC（技术提案）文档，自动补全背景、优缺点及替代方案考量。 | [README](./skills/rfc-writer/README.md) |
-| `cli-help-writer` | `skills/cli-help-writer/` | 将零散的命令行参数与说明转化为排版精美、符合 POSIX 标准的终端 `--help` 文案或 Man Page。 | [README](./skills/cli-help-writer/README.md) |
+| `cli-help-writer` | `skills/cli-help-writer/` | 将零散的命令行参数与说明转化为排版精美、符合 POSIX 标准的终端 `--help` 文案或 Man Page，并自动脱敏敏感参数。 | [README](./skills/cli-help-writer/README.md) |
 | `prompt-reviewer` | `skills/prompt-reviewer/` | 审查 Prompt，找出歧义、遗漏约束、潜在幻觉风险，并提供改进建议与优化后的 Prompt。 | [README](./skills/prompt-reviewer/README.md) |
 | `readme-grader` | `skills/readme-grader/` | 评估开源项目 README 文本，从简介、安装、使用、贡献等 5 个维度打分并提供具体的改进建议。 | [README](./skills/readme-grader/README.md) |
 

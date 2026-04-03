@@ -116,8 +116,8 @@ export const skills: Skill[] = [
     id: 'cli-help-writer',
     name: 'cli-help-writer',
     description: {
-      en: 'Convert scattered command-line arguments and descriptions into beautifully formatted, POSIX-compliant terminal --help text or Man Pages.',
-      zh: '将零散的命令行参数与说明转化为排版精美、符合 POSIX 标准的终端 --help 文案或 Man Page。'
+      en: 'Convert scattered command-line arguments and descriptions into beautifully formatted, POSIX-compliant terminal --help text or Man Pages with automatic credential redaction.',
+      zh: '将零散的命令行参数与说明转化为排版精美、符合 POSIX 标准的终端 --help 文案或 Man Page，并自动脱敏敏感参数。'
     },
     category: 'developer_tools',
     icon: Terminal
