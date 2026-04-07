@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Terminal, Copy, Check, Github, Code2, Sparkles, Globe } from 'lucide-react';
+import { Terminal, Copy, Check, Github, Code2, Sparkles, Globe, Star } from 'lucide-react';
 import { skills } from './data/skills';
 
 type Language = 'en' | 'zh';
@@ -14,6 +14,7 @@ const translations = {
     heroDesc: 'A suite of open-source tools for license comparison, project analysis, maintenance utilities, and more.',
     copyInstall: 'Copy installation command',
     inspiredBy: 'Supported AI Agents & Tools',
+    recommendedSkills: 'Recommended Skills',
     skillsTitle: 'Available Skills',
     category: 'Category',
     copied: 'Copied',
@@ -29,6 +30,7 @@ const translations = {
     heroDesc: '提供开源许可证对比、开源项目分析、维护开源项目常用工具等一系列开源相关工具。',
     copyInstall: '复制安装命令',
     inspiredBy: '支持以下 AI Agent 与工具',
+    recommendedSkills: '推荐技能',
     skillsTitle: '可用技能库',
     category: '分类',
     copied: '已复制',
@@ -39,7 +41,7 @@ const translations = {
 };
 
 function App() {
-  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [copiedIndex, setCopiedIndex] = useState<number | string | null>(null);
   const [copiedGlobal, setCopiedGlobal] = useState(false);
   const [lang, setLang] = useState<Language>('en');
 
@@ -49,7 +51,7 @@ function App() {
     setLang(prev => prev === 'en' ? 'zh' : 'en');
   };
 
-  const copyToClipboard = (text: string, index?: number) => {
+  const copyToClipboard = (text: string, index?: number | string) => {
     navigator.clipboard.writeText(text);
     if (index !== undefined) {
       setCopiedIndex(index);
@@ -210,6 +212,58 @@ function App() {
           </motion.div>
         </section>
 
+        {/* Recommended Skills */}
+        <section id="recommended-skills" className="relative z-30 pointer-events-auto mb-20">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-3xl font-bold flex items-center gap-3">
+              <Star className="w-8 h-8 text-yellow-500 fill-yellow-500" />
+              {t.recommendedSkills}
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {skills.filter(s => ['open-source-license', 'open-source-analysis', 'openrank-metrics'].includes(s.id)).map((skill, idx) => {
+              const Icon = skill.icon;
+              return (
+                <motion.div
+                  key={skill.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.4, delay: idx * 0.1 }}
+                  className="group glow-card bg-gradient-to-b from-primary/10 to-card border-2 border-primary/30 rounded-2xl p-6 hover:border-primary/60 transition-colors shadow-lg shadow-primary/10 relative overflow-hidden"
+                >
+                  <div className="absolute top-0 right-0 p-4">
+                    <Sparkles className="w-5 h-5 text-primary opacity-50" />
+                  </div>
+                  <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 font-mono">{skill.name}</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-6 h-20">
+                    {skill.description[lang]}
+                  </p>
+                  <div className="flex items-center justify-between pt-4 border-t border-border/50 relative z-10 pointer-events-auto">
+                    <span className="text-xs font-mono text-primary bg-primary/10 px-2 py-1 rounded-md font-medium">
+                      {skill.category}
+                    </span>
+                    <button
+                      onClick={() => copyToClipboard(`npx skills add sunny0826/open-source-skills --skill ${skill.id}`, `rec-${skill.id}`)}
+                      className="text-xs font-medium text-primary hover:text-primary/80 flex items-center gap-1 transition-colors cursor-pointer pointer-events-auto"
+                    >
+                      {copiedIndex === `rec-${skill.id}` ? (
+                        <><Check className="w-3 h-3" /> {t.copied}</>
+                      ) : (
+                        <><Copy className="w-3 h-3" /> {t.copyCommand}</>
+                      )}
+                    </button>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </section>
+
         {/* Skills Grid */}
         <section id="skills" className="relative z-30 pointer-events-auto">
           <div className="flex items-center justify-between mb-12">
@@ -220,7 +274,7 @@ function App() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {skills.map((skill, idx) => {
+            {skills.filter(s => !['open-source-license', 'open-source-analysis', 'openrank-metrics'].includes(s.id)).map((skill, idx) => {
               const Icon = skill.icon;
               return (
                 <motion.div
@@ -243,10 +297,10 @@ function App() {
                       {skill.category}
                     </span>
                     <button
-                      onClick={() => copyToClipboard(`npx skills add sunny0826/open-source-skills --skill ${skill.id}`, idx)}
+                      onClick={() => copyToClipboard(`npx skills add sunny0826/open-source-skills --skill ${skill.id}`, `all-${skill.id}`)}
                       className="text-xs font-medium text-primary hover:text-primary/80 flex items-center gap-1 transition-colors cursor-pointer pointer-events-auto"
                     >
-                      {copiedIndex === idx ? (
+                      {copiedIndex === `all-${skill.id}` ? (
                         <><Check className="w-3 h-3" /> {t.copied}</>
                       ) : (
                         <><Copy className="w-3 h-3" /> {t.copyCommand}</>
