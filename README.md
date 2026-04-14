@@ -7,7 +7,11 @@
 快速安装：
 
 ```bash
+# 使用 npx skills 安装整个技能包
 npx skills add sunny0826/open-source-skills
+
+# 或使用 openclaw 安装指定 skill (以 cli-help-writer 为例)
+clawhub install cli-help-writer
 ```
 
 ## Available Skills

@@ -44,6 +44,7 @@ function App() {
   const [copiedIndex, setCopiedIndex] = useState<number | string | null>(null);
   const [copiedGlobal, setCopiedGlobal] = useState(false);
   const [lang, setLang] = useState<Language>('en');
+  const [installer, setInstaller] = useState<'npx' | 'clawhub'>('npx');
 
   const t = translations[lang];
 
@@ -128,17 +129,34 @@ function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-xl mx-auto relative z-30 pointer-events-auto"
+            className="flex flex-col items-center justify-center gap-6 w-full max-w-xl mx-auto relative z-30 pointer-events-auto"
           >
+            <div className="flex bg-muted/30 p-1 rounded-lg gap-1 border border-border/50 backdrop-blur-sm">
+              <button 
+                onClick={() => setInstaller('npx')} 
+                className={`px-4 py-1.5 text-sm rounded-md transition-all font-medium ${installer === 'npx' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}
+              >
+                npx
+              </button>
+              <button 
+                onClick={() => setInstaller('clawhub')} 
+                className={`px-4 py-1.5 text-sm rounded-md transition-all font-medium ${installer === 'clawhub' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}
+              >
+                openclaw
+              </button>
+            </div>
+
             <div className="relative w-full group">
               <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-secondary rounded-lg blur opacity-30 group-hover:opacity-60 transition duration-500 pointer-events-none"></div>
               <div className="relative flex items-center justify-between bg-black/80 backdrop-blur-sm border border-border/60 rounded-lg p-1 pl-5 h-16 z-40 pointer-events-auto shadow-2xl">
                 <div className="flex items-center gap-3 overflow-hidden">
                   <Terminal className="w-5 h-5 text-primary shrink-0" />
-                  <code className="text-sm md:text-base text-gray-300 font-mono select-all truncate">npx skills add sunny0826/open-source-skills</code>
+                  <code className="text-sm md:text-base text-gray-300 font-mono select-all truncate">
+                    {installer === 'npx' ? 'npx skills add sunny0826/open-source-skills' : 'clawhub install <skill-name>'}
+                  </code>
                 </div>
                 <button 
-                  onClick={() => copyToClipboard('npx skills add sunny0826/open-source-skills')}
+                  onClick={() => copyToClipboard(installer === 'npx' ? 'npx skills add sunny0826/open-source-skills' : 'clawhub install <skill-name>')}
                   className="flex items-center justify-center h-12 w-12 rounded-md hover:bg-white/10 transition-colors ml-2 shrink-0 cursor-pointer relative z-50 pointer-events-auto bg-white/5"
                   title={t.copyInstall}
                 >
@@ -247,16 +265,30 @@ function App() {
                     <span className="text-xs font-mono text-primary bg-primary/10 px-2 py-1 rounded-md font-medium">
                       {skill.category}
                     </span>
-                    <button
-                      onClick={() => copyToClipboard(`npx skills add sunny0826/open-source-skills --skill ${skill.id}`, `rec-${skill.id}`)}
-                      className="text-xs font-medium text-primary hover:text-primary/80 flex items-center gap-1 transition-colors cursor-pointer pointer-events-auto"
-                    >
-                      {copiedIndex === `rec-${skill.id}` ? (
-                        <><Check className="w-3 h-3" /> {t.copied}</>
-                      ) : (
-                        <><Copy className="w-3 h-3" /> {t.copyCommand}</>
-                      )}
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => copyToClipboard(`npx skills add sunny0826/open-source-skills --skill ${skill.id}`, `rec-npx-${skill.id}`)}
+                        className="text-xs font-medium text-primary hover:text-primary/80 flex items-center gap-1 transition-colors cursor-pointer pointer-events-auto bg-primary/5 hover:bg-primary/10 px-2 py-1 rounded-md"
+                        title="Copy npx command"
+                      >
+                        {copiedIndex === `rec-npx-${skill.id}` ? (
+                          <><Check className="w-3 h-3" /> npx</>
+                        ) : (
+                          <><Copy className="w-3 h-3" /> npx</>
+                        )}
+                      </button>
+                      <button
+                        onClick={() => copyToClipboard(`clawhub install ${skill.id}`, `rec-clawhub-${skill.id}`)}
+                        className="text-xs font-medium text-primary hover:text-primary/80 flex items-center gap-1 transition-colors cursor-pointer pointer-events-auto bg-primary/5 hover:bg-primary/10 px-2 py-1 rounded-md"
+                        title="Copy clawhub command"
+                      >
+                        {copiedIndex === `rec-clawhub-${skill.id}` ? (
+                          <><Check className="w-3 h-3" /> clawhub</>
+                        ) : (
+                          <><Copy className="w-3 h-3" /> clawhub</>
+                        )}
+                      </button>
+                    </div>
                   </div>
                 </motion.div>
               );
@@ -296,16 +328,30 @@ function App() {
                     <span className="text-xs font-mono text-muted-foreground bg-muted px-2 py-1 rounded-md">
                       {skill.category}
                     </span>
-                    <button
-                      onClick={() => copyToClipboard(`npx skills add sunny0826/open-source-skills --skill ${skill.id}`, `all-${skill.id}`)}
-                      className="text-xs font-medium text-primary hover:text-primary/80 flex items-center gap-1 transition-colors cursor-pointer pointer-events-auto"
-                    >
-                      {copiedIndex === `all-${skill.id}` ? (
-                        <><Check className="w-3 h-3" /> {t.copied}</>
-                      ) : (
-                        <><Copy className="w-3 h-3" /> {t.copyCommand}</>
-                      )}
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => copyToClipboard(`npx skills add sunny0826/open-source-skills --skill ${skill.id}`, `all-npx-${skill.id}`)}
+                        className="text-xs font-medium text-primary hover:text-primary/80 flex items-center gap-1 transition-colors cursor-pointer pointer-events-auto bg-primary/5 hover:bg-primary/10 px-2 py-1 rounded-md"
+                        title="Copy npx command"
+                      >
+                        {copiedIndex === `all-npx-${skill.id}` ? (
+                          <><Check className="w-3 h-3" /> npx</>
+                        ) : (
+                          <><Copy className="w-3 h-3" /> npx</>
+                        )}
+                      </button>
+                      <button
+                        onClick={() => copyToClipboard(`clawhub install ${skill.id}`, `all-clawhub-${skill.id}`)}
+                        className="text-xs font-medium text-primary hover:text-primary/80 flex items-center gap-1 transition-colors cursor-pointer pointer-events-auto bg-primary/5 hover:bg-primary/10 px-2 py-1 rounded-md"
+                        title="Copy clawhub command"
+                      >
+                        {copiedIndex === `all-clawhub-${skill.id}` ? (
+                          <><Check className="w-3 h-3" /> clawhub</>
+                        ) : (
+                          <><Copy className="w-3 h-3" /> clawhub</>
+                        )}
+                      </button>
+                    </div>
                   </div>
                 </motion.div>
               );
