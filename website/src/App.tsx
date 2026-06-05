@@ -1,374 +1,397 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Terminal, Copy, Check, Github, Code2, Sparkles, Globe, Star } from 'lucide-react';
+import { useMemo, useState } from 'react';
+import {
+  Check,
+  ChevronRight,
+  Copy,
+  Globe,
+  Terminal,
+} from 'lucide-react';
 import { skills } from './data/skills';
 
 type Language = 'en' | 'zh';
+type Installer = 'npx' | 'clawhub';
+
+const recommendedIds = ['open-source-license', 'open-source-analysis', 'openrank-metrics'];
+
+const agents = [
+  { name: 'AMP', url: 'https://ampcode.com/', logo: 'https://www.google.com/s2/favicons?domain_url=https://ampcode.com&sz=64' },
+  { name: 'Claude Code', url: 'https://claude.com/product/claude-code', logo: 'https://www.google.com/s2/favicons?domain_url=https://claude.com&sz=64' },
+  { name: 'Cline', url: 'https://cline.bot/', logo: 'https://www.google.com/s2/favicons?domain_url=https://cline.bot&sz=64' },
+  { name: 'Codex', url: 'https://openai.com/codex', logo: 'https://www.google.com/s2/favicons?domain_url=https://openai.com&sz=64' },
+  { name: 'Cursor', url: 'https://cursor.sh', logo: 'https://www.google.com/s2/favicons?domain_url=https://cursor.com&sz=64' },
+  { name: 'Goose', url: 'https://block.github.io/goose', logo: 'https://www.google.com/s2/favicons?domain_url=https://goose-docs.ai&sz=64' },
+  { name: 'Roo', url: 'https://roocode.com/', logo: 'https://www.google.com/s2/favicons?domain_url=https://roocode.com&sz=64' },
+  { name: 'Trae', url: 'https://www.trae.ai/', logo: 'https://www.google.com/s2/favicons?domain_url=https://trae.ai&sz=64' },
+  { name: 'Windsurf', url: 'https://codeium.com/windsurf', logo: 'https://www.google.com/s2/favicons?domain_url=https://windsurf.com&sz=64' },
+  { name: 'OpenCode', url: 'https://www.opencode.ai/', logo: 'https://www.google.com/s2/favicons?domain_url=https://opencode.ai&sz=64' },
+  { name: 'Kiro', url: 'https://www.kiro.dev/', logo: 'https://www.google.com/s2/favicons?domain_url=https://kiro.dev&sz=64' },
+];
 
 const translations = {
   en: {
-    navTitle: 'OS Skills',
-    heroTag: 'Exclusive Agent Skills for Open Source Maintainers',
-    heroTitlePart1: 'Elevate Your',
-    heroTitlePart2: 'Open Source Workflow',
-    heroDesc: 'A suite of open-source tools for license comparison, project analysis, maintenance utilities, and more.',
-    copyInstall: 'Copy installation command',
-    inspiredBy: 'Supported AI Agents & Tools',
-    recommendedSkills: 'Recommended Skills',
-    skillsTitle: 'Available Skills',
-    category: 'Category',
+    navTitle: 'Open Source Skills',
+    navSkills: 'Skills',
+    navInstall: 'Install',
+    navAgents: 'Agents',
+    languageLabel: '中文',
+    heroLabel: 'Skill catalog for maintainers',
+    heroTitle: 'Agent skills for open source work',
+    heroDesc:
+      'Install focused skills for license review, repository analysis, PR writing, release notes, issue triage, contributor docs, and prompt review',
+    copyInstall: 'Copy install command',
     copied: 'Copied',
-    copyCommand: 'Copy command',
-    footerPrefix: 'Built with',
-    footerSuffix: 'for the Open Source Community.',
+    commandLabel: 'Install command',
+    commandNote: 'Use the full package, or copy a per-skill command from any row',
+    frameUrl: 'open source skills',
+    workspace: 'Skill workspace',
+    sidebarFeatured: 'Featured',
+    sidebarAll: 'All skills',
+    sidebarInstall: 'Install',
+    selected: 'Selected skill',
+    recommended: 'Recommended first',
+    recommendedDesc: 'Start with the skills that answer the most common maintainer questions',
+    allSkills: 'All skills',
+    allSkillsDesc: 'A compact catalog with direct copy actions for both supported installers',
+    supportedAgents: 'Supported agents and tools',
+    category: 'Category',
+    copyNpx: 'Copy npx',
+    copyClawhub: 'Copy clawhub',
+    viewGithub: 'View repository',
+    installPath: 'Install path',
+    footer: 'Built as a precise catalog for open source maintainers',
   },
   zh: {
-    navTitle: 'OS Skills',
-    heroTag: '为开源维护者打造的专属智能体技能库',
-    heroTitlePart1: '提升你的',
-    heroTitlePart2: '开源工作流',
-    heroDesc: '提供开源许可证对比、开源项目分析、维护开源项目常用工具等一系列开源相关工具。',
+    navTitle: 'Open Source Skills',
+    navSkills: '技能',
+    navInstall: '安装',
+    navAgents: '工具',
+    languageLabel: 'EN',
+    heroLabel: '面向维护者的 Skill 目录',
+    heroTitle: '开源 Agent Skill',
+    heroDesc:
+      '安装面向许可证审查、仓库分析、PR 描述、发版说明、Issue 分诊、贡献指南和 Prompt 审查的专用技能',
     copyInstall: '复制安装命令',
-    inspiredBy: '支持以下 AI Agent 与工具',
-    recommendedSkills: '推荐技能',
-    skillsTitle: '可用技能库',
-    category: '分类',
     copied: '已复制',
-    copyCommand: '复制安装命令',
-    footerPrefix: 'Built with',
-    footerSuffix: 'for the Open Source Community.',
-  }
+    commandLabel: '安装命令',
+    commandNote: '可以安装完整技能包，也可以在任意行复制单个 skill 命令',
+    frameUrl: 'open source skills',
+    workspace: 'Skill 工作区',
+    sidebarFeatured: '推荐',
+    sidebarAll: '全部技能',
+    sidebarInstall: '安装',
+    selected: '当前技能',
+    recommended: '推荐',
+    recommendedDesc: '先从覆盖维护者高频问题的技能开始',
+    allSkills: '全部技能',
+    allSkillsDesc: '紧凑目录，支持直接复制两种安装命令',
+    supportedAgents: '支持的 Agent 与工具',
+    category: '分类',
+    copyNpx: '复制 npx',
+    copyClawhub: '复制 clawhub',
+    viewGithub: '查看仓库',
+    installPath: '安装路径',
+    footer: '为开源维护者构建的 Agent 技能',
+  },
 };
 
+function BrandMark() {
+  return (
+    <span className="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" focusable="false">
+        <rect x="5" y="5" width="6" height="6" rx="1.5" />
+        <rect x="13" y="5" width="6" height="6" rx="1.5" />
+        <rect x="5" y="13" width="6" height="6" rx="1.5" />
+        <rect x="13" y="13" width="6" height="6" rx="1.5" />
+      </svg>
+    </span>
+  );
+}
+
 function App() {
-  const [copiedIndex, setCopiedIndex] = useState<number | string | null>(null);
-  const [copiedGlobal, setCopiedGlobal] = useState(false);
   const [lang, setLang] = useState<Language>('en');
-  const [installer, setInstaller] = useState<'npx' | 'clawhub'>('npx');
+  const [installer, setInstaller] = useState<Installer>('npx');
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [selectedSkillId, setSelectedSkillId] = useState(recommendedIds[0]);
 
   const t = translations[lang];
+  const selectedSkill = skills.find((skill) => skill.id === selectedSkillId) ?? skills[0];
+  const recommendedSkills = useMemo(
+    () => skills.filter((skill) => recommendedIds.includes(skill.id)),
+    []
+  );
 
-  const toggleLanguage = () => {
-    setLang(prev => prev === 'en' ? 'zh' : 'en');
+  const command =
+    installer === 'npx'
+      ? 'npx skills add sunny0826/open-source-skills'
+      : 'clawhub install <skill-name>';
+
+  const copyToClipboard = (text: string, key: string) => {
+    void navigator.clipboard.writeText(text).catch(() => undefined);
+    setCopiedKey(key);
+    window.setTimeout(() => setCopiedKey(null), 1600);
   };
 
-  const copyToClipboard = (text: string, index?: number | string) => {
-    navigator.clipboard.writeText(text);
-    if (index !== undefined) {
-      setCopiedIndex(index);
-      setTimeout(() => setCopiedIndex(null), 2000);
-    } else {
-      setCopiedGlobal(true);
-      setTimeout(() => setCopiedGlobal(false), 2000);
-    }
-  };
+  const skillCommand = (skillId: string, type: Installer) =>
+    type === 'npx'
+      ? `npx skills add sunny0826/open-source-skills --skill ${skillId}`
+      : `clawhub install ${skillId}`;
 
   return (
-    <div className="min-h-screen font-sans relative">
-      <div className="bg-mesh"></div>
-      {/* Navbar */}
-      <nav className="fixed top-0 w-full z-50 border-b border-border/40 bg-background/60 backdrop-blur-xl">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between relative z-50">
-          <div className="flex items-center gap-2 font-bold text-lg tracking-tight">
-            <Terminal className="w-5 h-5 text-primary" />
-            <span>{t.navTitle}</span>
-          </div>
-          <div className="flex items-center gap-4 relative z-50 pointer-events-auto">
-            <button 
-              onClick={toggleLanguage}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors cursor-pointer flex items-center gap-1 bg-muted/50 px-2 py-1 rounded-md"
-              title="Toggle Language"
-            >
-              <Globe className="w-4 h-4" />
-              <span>{lang === 'en' ? '中文' : 'EN'}</span>
-            </button>
-            <a 
-              href="https://github.com/sunny0826/open-source-skills" 
-              target="_blank" 
-              rel="noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
-            >
-              <Github className="w-5 h-5" />
-            </a>
-          </div>
+    <div className="site-shell">
+      <header className="site-header">
+        <a className="brand" href="#top" aria-label="Open Source Skills home">
+          <BrandMark />
+          <span>{t.navTitle}</span>
+        </a>
+        <div className="header-actions header-actions-polished">
+          <button
+            className="ghost-button"
+            type="button"
+            onClick={() => setLang((current) => (current === 'en' ? 'zh' : 'en'))}
+          >
+            <Globe aria-hidden="true" />
+            <span>{t.languageLabel}</span>
+          </button>
+          <a
+            className="icon-button github-icon-button"
+            href="https://github.com/sunny0826/open-source-skills"
+            target="_blank"
+            rel="noreferrer"
+            aria-label={t.viewGithub}
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
+            </svg>
+          </a>
         </div>
-      </nav>
+      </header>
 
-      <main className="pt-32 pb-24 px-6 max-w-7xl mx-auto">
-        {/* Hero Section */}
-        <section className="flex flex-col items-center text-center mb-24 mt-12 relative z-20 pointer-events-none">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-medium mb-8 pointer-events-auto"
-          >
-            <Sparkles className="w-4 h-4" />
-            <span>{t.heroTag}</span>
-          </motion.div>
-          
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-5xl md:text-7xl font-bold tracking-tight mb-6 max-w-4xl leading-[1.1] pointer-events-auto"
-          >
-            {t.heroTitlePart1} <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary glow-text">{t.heroTitlePart2}</span>
-          </motion.h1>
-          
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-xl text-muted-foreground max-w-2xl mb-12 pointer-events-auto"
-          >
-            {t.heroDesc}
-          </motion.p>
+      <main id="top">
+        <section className="hero-section hero-polish-command">
+          <div className="hero-copy">
+            <p className="eyebrow">{t.heroLabel}</p>
+            <h1>{t.heroTitle}</h1>
+            <p className="hero-desc">{t.heroDesc}</p>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex flex-col items-center justify-center gap-6 w-full max-w-xl mx-auto relative z-30 pointer-events-auto"
-          >
-            <div className="flex bg-muted/30 p-1 rounded-lg gap-1 border border-border/50 backdrop-blur-sm">
-              <button 
-                onClick={() => setInstaller('npx')} 
-                className={`px-4 py-1.5 text-sm rounded-md transition-all font-medium ${installer === 'npx' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}
-              >
-                npx
-              </button>
-              <button 
-                onClick={() => setInstaller('clawhub')} 
-                className={`px-4 py-1.5 text-sm rounded-md transition-all font-medium ${installer === 'clawhub' ? 'bg-primary text-primary-foreground shadow-sm' : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'}`}
-              >
-                openclaw
-              </button>
-            </div>
-
-            <div className="relative w-full group">
-              <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-secondary rounded-lg blur opacity-30 group-hover:opacity-60 transition duration-500 pointer-events-none"></div>
-              <div className="relative flex items-center justify-between bg-black/80 backdrop-blur-sm border border-border/60 rounded-lg p-1 pl-5 h-16 z-40 pointer-events-auto shadow-2xl">
-                <div className="flex items-center gap-3 overflow-hidden">
-                  <Terminal className="w-5 h-5 text-primary shrink-0" />
-                  <code className="text-sm md:text-base text-gray-300 font-mono select-all truncate">
-                    {installer === 'npx' ? 'npx skills add sunny0826/open-source-skills' : 'clawhub install <skill-name>'}
-                  </code>
+            <div className="install-card" id="install">
+              <div className="install-card-header">
+                <div>
+                  <span className="meta-label">{t.commandLabel}</span>
+                  <p>{t.commandNote}</p>
                 </div>
-                <button 
-                  onClick={() => copyToClipboard(installer === 'npx' ? 'npx skills add sunny0826/open-source-skills' : 'clawhub install <skill-name>')}
-                  className="flex items-center justify-center h-12 w-12 rounded-md hover:bg-white/10 transition-colors ml-2 shrink-0 cursor-pointer relative z-50 pointer-events-auto bg-white/5"
-                  title={t.copyInstall}
+                <div className="segment" role="tablist" aria-label={t.installPath}>
+                  <button
+                    type="button"
+                    className={installer === 'npx' ? 'is-active' : ''}
+                    onClick={() => setInstaller('npx')}
+                  >
+                    npx
+                  </button>
+                  <button
+                    type="button"
+                    className={installer === 'clawhub' ? 'is-active' : ''}
+                    onClick={() => setInstaller('clawhub')}
+                  >
+                    openclaw
+                  </button>
+                </div>
+              </div>
+              <div className="command-row">
+                <Terminal aria-hidden="true" />
+                <code>{command}</code>
+                <button
+                  className="icon-button"
+                  type="button"
+                  onClick={() => copyToClipboard(command, 'global-command')}
+                  aria-label={t.copyInstall}
                 >
-                  {copiedGlobal ? <Check className="w-5 h-5 text-green-500" /> : <Copy className="w-5 h-5 text-gray-400" />}
+                  {copiedKey === 'global-command' ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
                 </button>
               </div>
             </div>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="w-full relative z-30 pointer-events-auto mt-24"
-          >
-            <div className="flex items-center justify-center gap-4 mb-8 opacity-60">
-              <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-border"></div>
-              <p className="text-xs sm:text-sm font-medium tracking-widest uppercase text-muted-foreground">{t.inspiredBy}</p>
-              <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-border"></div>
+          </div>
+
+          <div className="catalog-frame catalog-frame-command catalog-window-wide catalog-items-command catalog-items-selected" aria-label="Skill catalog preview">
+            <div className="frame-bar">
+              <span className="window-dot" />
+              <span className="window-dot" />
+              <span className="window-dot" />
+              <span className="frame-url">{t.frameUrl}</span>
             </div>
-            <div className="flex justify-center w-full">
-              <div 
-                className="flex overflow-hidden w-full max-w-5xl" 
-                style={{ WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}
-              >
-                <div className="flex gap-10 sm:gap-16 py-6 px-2 w-max animate-scroll">
-                  {/* We duplicate the array to create a seamless infinite scroll effect */}
-                  {[
-                    { name: "AMP", url: "https://ampcode.com/", img: "https://skills.sh/agents/amp.svg" },
-                    { name: "Claude Code", url: "https://claude.com/product/claude-code", img: "https://skills.sh/agents/claude-code.svg" },
-                    { name: "ClawdBot", url: "https://clawd.bot/", img: "https://skills.sh/agents/clawdbot.svg" },
-                    { name: "Cline", url: "https://cline.bot/", img: "https://skills.sh/agents/cline.svg" },
-                    { name: "Codex", url: "https://openai.com/codex", img: "https://skills.sh/agents/codex.svg" },
-                    { name: "Cursor", url: "https://cursor.sh", img: "https://skills.sh/agents/cursor.svg" },
-                    { name: "Goose", url: "https://block.github.io/goose", img: "https://skills.sh/agents/goose.svg" },
-                    { name: "Roo", url: "https://roocode.com/", img: "https://skills.sh/agents/roo.svg" },
-                    { name: "Trae", url: "https://www.trae.ai/", img: "https://skills.sh/agents/trae.svg" },
-                    { name: "Windsurf", url: "https://codeium.com/windsurf", img: "https://skills.sh/agents/windsurf.svg" }
-                  ].concat([
-                    { name: "AMP", url: "https://ampcode.com/", img: "https://skills.sh/agents/amp.svg" },
-                    { name: "Claude Code", url: "https://claude.com/product/claude-code", img: "https://skills.sh/agents/claude-code.svg" },
-                    { name: "ClawdBot", url: "https://clawd.bot/", img: "https://skills.sh/agents/clawdbot.svg" },
-                    { name: "Cline", url: "https://cline.bot/", img: "https://skills.sh/agents/cline.svg" },
-                    { name: "Codex", url: "https://openai.com/codex", img: "https://skills.sh/agents/codex.svg" },
-                    { name: "Cursor", url: "https://cursor.sh", img: "https://skills.sh/agents/cursor.svg" },
-                    { name: "Goose", url: "https://block.github.io/goose", img: "https://skills.sh/agents/goose.svg" },
-                    { name: "Roo", url: "https://roocode.com/", img: "https://skills.sh/agents/roo.svg" },
-                    { name: "Trae", url: "https://www.trae.ai/", img: "https://skills.sh/agents/trae.svg" },
-                    { name: "Windsurf", url: "https://codeium.com/windsurf", img: "https://skills.sh/agents/windsurf.svg" }
-                  ]).map((agent, i) => (
-                    <a 
-                      key={i}
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="flex-shrink-0 grayscale hover:grayscale-0 transition-all duration-300 opacity-60 hover:opacity-100 flex items-center justify-center" 
+            <div className="catalog-command-body">
+              <section className="catalog-command-inspector" aria-label={t.selected}>
+                <span className="meta-label">{t.installPath}</span>
+                <h2>{selectedSkill.name}</h2>
+                <p>{selectedSkill.description[lang]}</p>
+                <div className="detail-meta">
+                  <span className="status-chip">{selectedSkill.category}</span>
+                  <span className="status-chip accent">{installer}</span>
+                </div>
+              </section>
+
+              <section className="catalog-command-list" aria-label={t.allSkills}>
+                <div className="frame-list-header">
+                  <span>{t.allSkills}</span>
+                  <span className="mono">{skills.length} indexed</span>
+                </div>
+                {skills.slice(0, 7).map((skill) => {
+                  const Icon = skill.icon;
+                  const commandKey = `item-selected-${skill.id}`;
+                  return (
+                    <div
+                      className={`catalog-item-selectable ${selectedSkillId === skill.id ? 'is-selected' : ''}`}
+                      key={`item-selected-${skill.id}`}
+                    >
+                      <button
+                        type="button"
+                        className="catalog-item-compact"
+                        onClick={() => setSelectedSkillId(skill.id)}
+                      >
+                        <Icon aria-hidden="true" />
+                        <span>
+                          <strong>{skill.id}</strong>
+                          <span>{skill.category}</span>
+                        </span>
+                        <ChevronRight aria-hidden="true" />
+                      </button>
+                      {selectedSkillId === skill.id && (
+                        <div className="selected-row-command">
+                          <Terminal aria-hidden="true" />
+                          <code>{skillCommand(skill.id, installer)}</code>
+                          <button
+                            type="button"
+                            className="icon-button"
+                            onClick={() => copyToClipboard(skillCommand(skill.id, installer), commandKey)}
+                            aria-label={`${t.copyInstall}: ${skill.name}`}
+                          >
+                            {copiedKey === commandKey ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </section>
+            </div>
+          </div>
+          <section className="agents-carousel agents-hero-command" id="agents" aria-labelledby="agents-title">
+
+            <div className="agents-command-line agents-bw-outline agents-rail-tight agents-layout-fixed agents-overlap-clear agents-logo-xl">
+              <p className="agents-command-label" id="agents-title">{lang === 'en' ? 'works with' : '支持工具'}</p>
+              <div className="agents-command-track" aria-label={t.supportedAgents}>
+                <div className="agents-lane">
+                  {[...agents, ...agents].map((agent, index) => (
+                    <a
+                      key={`agents-logo-xl-${agent.name}-${index}`}
                       href={agent.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="agents-logo-card"
                       title={agent.name}
                     >
-                      <img 
-                        alt={agent.name} 
-                        loading="eager" 
-                        width="100" 
-                        height="100" 
-                        className="h-[48px] sm:h-[64px] lg:h-[80px] w-auto object-contain" 
-                        src={agent.img} 
-                      />
+                      <img src={agent.logo} alt="" loading="lazy" />
+                      <span>{agent.name}</span>
                     </a>
                   ))}
                 </div>
               </div>
             </div>
-          </motion.div>
+
+          </section>
         </section>
 
-        {/* Recommended Skills */}
-        <section id="recommended-skills" className="relative z-30 pointer-events-auto mb-20">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-bold flex items-center gap-3">
-              <Star className="w-8 h-8 text-yellow-500 fill-yellow-500" />
-              {t.recommendedSkills}
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {skills.filter(s => ['open-source-license', 'open-source-analysis', 'openrank-metrics'].includes(s.id)).map((skill, idx) => {
-              const Icon = skill.icon;
-              return (
-                <motion.div
-                  key={skill.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: idx * 0.1 }}
-                  className="group glow-card bg-gradient-to-b from-primary/10 to-card border-2 border-primary/30 rounded-2xl p-6 hover:border-primary/60 transition-colors shadow-lg shadow-primary/10 relative overflow-hidden"
+        <section className="section-block recommended-path" aria-labelledby="recommended-title">
+          <div className="recommended-path-grid">
+            <div className="recommended-path-copy">
+              <p className="eyebrow">{lang === 'en' ? 'Suggested path' : '建议路径'}</p>
+              <h2 id="recommended-title">{t.recommended}</h2>
+              <p>{t.recommendedDesc}</p>
+              <div className="recommended-command-line">
+                <Terminal aria-hidden="true" />
+                <code>{command}</code>
+                <button
+                  type="button"
+                  className="icon-button"
+                  onClick={() => copyToClipboard(command, 'recommended-global-command')}
+                  aria-label={t.copyInstall}
                 >
-                  <div className="absolute top-0 right-0 p-4">
-                    <Sparkles className="w-5 h-5 text-primary opacity-50" />
-                  </div>
-                  <div className="w-12 h-12 rounded-xl bg-primary/20 flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform">
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 font-mono">{skill.name}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-6 h-20">
-                    {skill.description[lang]}
-                  </p>
-                  <div className="flex items-center justify-between pt-4 border-t border-border/50 relative z-10 pointer-events-auto">
-                    <span className="text-xs font-mono text-primary bg-primary/10 px-2 py-1 rounded-md font-medium">
-                      {skill.category}
-                    </span>
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => copyToClipboard(`npx skills add sunny0826/open-source-skills --skill ${skill.id}`, `rec-npx-${skill.id}`)}
-                        className="text-xs font-medium text-primary hover:text-primary/80 flex items-center gap-1 transition-colors cursor-pointer pointer-events-auto bg-primary/5 hover:bg-primary/10 px-2 py-1 rounded-md"
-                        title="Copy npx command"
-                      >
-                        {copiedIndex === `rec-npx-${skill.id}` ? (
-                          <><Check className="w-3 h-3" /> npx</>
-                        ) : (
-                          <><Copy className="w-3 h-3" /> npx</>
-                        )}
-                      </button>
-                      <button
-                        onClick={() => copyToClipboard(`clawhub install ${skill.id}`, `rec-clawhub-${skill.id}`)}
-                        className="text-xs font-medium text-primary hover:text-primary/80 flex items-center gap-1 transition-colors cursor-pointer pointer-events-auto bg-primary/5 hover:bg-primary/10 px-2 py-1 rounded-md"
-                        title="Copy clawhub command"
-                      >
-                        {copiedIndex === `rec-clawhub-${skill.id}` ? (
-                          <><Check className="w-3 h-3" /> clawhub</>
-                        ) : (
-                          <><Copy className="w-3 h-3" /> clawhub</>
-                        )}
-                      </button>
+                  {copiedKey === 'recommended-global-command' ? <Check aria-hidden="true" /> : <Copy aria-hidden="true" />}
+                </button>
+              </div>
+            </div>
+            <div className="recommended-path-list">
+              {recommendedSkills.map((skill, index) => {
+                const Icon = skill.icon;
+                return (
+                  <article className="recommended-path-row" key={skill.id}>
+                    <span className="recommended-rank">0{index + 1}</span>
+                    <div className="skill-icon">
+                      <Icon aria-hidden="true" />
                     </div>
-                  </div>
-                </motion.div>
-              );
-            })}
+                    <div>
+                      <h3>{skill.name}</h3>
+                      <p>{skill.description[lang]}</p>
+                    </div>
+                    <button
+                      type="button"
+                      className="secondary-button"
+                      onClick={() => copyToClipboard(skillCommand(skill.id, installer), `recommended-path-${skill.id}`)}
+                    >
+                      {copiedKey === `recommended-path-${skill.id}` ? t.copied : installer}
+                    </button>
+                  </article>
+                );
+              })}
+            </div>
           </div>
         </section>
-
-        {/* Skills Grid */}
-        <section id="skills" className="relative z-30 pointer-events-auto">
-          <div className="flex items-center justify-between mb-12">
-            <h2 className="text-3xl font-bold flex items-center gap-3">
-              <Code2 className="w-8 h-8 text-primary" />
-              {t.skillsTitle}
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {skills.filter(s => !['open-source-license', 'open-source-analysis', 'openrank-metrics'].includes(s.id)).map((skill, idx) => {
-              const Icon = skill.icon;
-              return (
-                <motion.div
-                  key={skill.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: idx * 0.05 }}
-                  className="group glow-card bg-card border border-border rounded-2xl p-6 hover:border-primary/50 transition-colors"
-                >
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-6 text-primary group-hover:scale-110 transition-transform">
-                    <Icon className="w-6 h-6" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 font-mono">{skill.name}</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-6 h-20">
-                    {skill.description[lang]}
-                  </p>
-                  <div className="flex items-center justify-between pt-4 border-t border-border/50 relative z-10 pointer-events-auto">
-                    <span className="text-xs font-mono text-muted-foreground bg-muted px-2 py-1 rounded-md">
-                      {skill.category}
-                    </span>
-                    <div className="flex items-center gap-2">
-                      <button
-                        onClick={() => copyToClipboard(`npx skills add sunny0826/open-source-skills --skill ${skill.id}`, `all-npx-${skill.id}`)}
-                        className="text-xs font-medium text-primary hover:text-primary/80 flex items-center gap-1 transition-colors cursor-pointer pointer-events-auto bg-primary/5 hover:bg-primary/10 px-2 py-1 rounded-md"
-                        title="Copy npx command"
-                      >
-                        {copiedIndex === `all-npx-${skill.id}` ? (
-                          <><Check className="w-3 h-3" /> npx</>
-                        ) : (
-                          <><Copy className="w-3 h-3" /> npx</>
-                        )}
-                      </button>
-                      <button
-                        onClick={() => copyToClipboard(`clawhub install ${skill.id}`, `all-clawhub-${skill.id}`)}
-                        className="text-xs font-medium text-primary hover:text-primary/80 flex items-center gap-1 transition-colors cursor-pointer pointer-events-auto bg-primary/5 hover:bg-primary/10 px-2 py-1 rounded-md"
-                        title="Copy clawhub command"
-                      >
-                        {copiedIndex === `all-clawhub-${skill.id}` ? (
-                          <><Check className="w-3 h-3" /> clawhub</>
-                        ) : (
-                          <><Copy className="w-3 h-3" /> clawhub</>
-                        )}
-                      </button>
+        <section className="section-block skills-catalog" id="skills" aria-labelledby="skills-title">
+          <div className="skills-catalog-shell">
+            <aside className="skills-catalog-rail">
+              <div>
+                <p className="eyebrow">{t.allSkills}</p>
+                <h2 id="skills-title">{t.allSkills}</h2>
+              </div>
+              <div className="skills-catalog-meta-polished">
+                <span><span>skills</span><strong>{skills.length}</strong></span>
+                <span><span>installers</span><strong>2</strong></span>
+              </div>
+            </aside>
+            <div className="skills-catalog-list">
+              {skills.map((skill) => {
+                const Icon = skill.icon;
+                return (
+                  <article className="skills-catalog-row skills-catalog-row-accordion" key={skill.id}>
+                    <Icon aria-hidden="true" />
+                    <div className="skills-title-stack">
+                      <h3>{skill.name}</h3>
+                      <details>
+                        <summary>{lang === 'en' ? 'Show details' : '展开详情'}</summary>
+                        <p>{skill.description[lang]}</p>
+                      </details>
                     </div>
-                  </div>
-                </motion.div>
-              );
-            })}
+                    <span className="status-chip">{skill.category}</span>
+                    <button
+                      type="button"
+                      className="secondary-button"
+                      onClick={() => copyToClipboard(skillCommand(skill.id, installer), `catalog-${skill.id}`)}
+                    >
+                      {copiedKey === `catalog-${skill.id}` ? t.copied : installer}
+                    </button>
+                  </article>
+                );
+              })}
+            </div>
           </div>
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-border/40 py-12 text-center text-muted-foreground">
-        <div className="flex items-center justify-center gap-2 mb-4">
-          <Terminal className="w-5 h-5" />
-          <span className="font-bold">{t.navTitle}</span>
+      <footer className="site-footer">
+        <div className="brand">
+          <BrandMark />
+          <span>{t.navTitle}</span>
         </div>
-        <p className="text-sm">
-          {t.footerPrefix} <span className="text-red-500">❤</span> {t.footerSuffix}
-        </p>
+        <p>{t.footer}</p>
       </footer>
     </div>
   );
