@@ -1,6 +1,6 @@
 ---
 name: dockerfile-optimizer
-description: "Review and optimize Dockerfiles to reduce layer count, minimize image size, and improve build times. Trigger when the user asks to review a Dockerfile, make a Docker image smaller, speed up a Docker build, or asks for Docker best practices."
+description: "Use when the user asks to review, debug, harden, or optimize a Dockerfile or container build for smaller images, faster caching, multi-stage builds, non-root runtime users, dependency installation, .dockerignore, or Docker best practices."
 ---
 
 # Dockerfile Optimizer Skill
@@ -82,3 +82,8 @@ Always structure your response using the following Markdown template (adapt head
 ## Important Rules:
 - **Do not break the app:** Ensure your optimizations (like using Alpine) won't break common dependencies unless you warn the user (e.g., Alpine uses `musl` instead of `glibc`, which can affect some Python/C++ binaries).
 - **Consolidate correctly:** Always chain `apt-get update` and `apt-get install` in the same `RUN` command, followed immediately by `rm -rf /var/lib/apt/lists/*`.
+
+## Gotchas
+- Smaller is not always safer: do not switch to Alpine when native dependencies, glibc assumptions, or distro packages make `slim` more reliable.
+- Preserve the app's package manager and lockfile workflow; do not replace `pnpm`, `yarn`, `uv`, `poetry`, or `go mod` patterns casually.
+- Cache optimization depends on COPY order; dependency manifests should usually be copied before source files.

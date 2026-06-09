@@ -1,6 +1,6 @@
 ---
 name: cli-help-writer
-description: "Generate standard, beautifully formatted `--help` documentation for Command Line Interface (CLI) tools based on raw arguments, flags, and descriptions. Triggers when the user asks to write help text, format CLI options, or generate a man page / terminal output text."
+description: "Use when the user asks to write or improve CLI help output, usage text, option/flag documentation, subcommand docs, examples, terminal `--help` text, or a man-page style command reference from raw arguments or an existing CLI."
 ---
 
 # CLI Help Writer Skill
@@ -90,3 +90,8 @@ EXAMPLES:
   ```
 - **Infer Missing Info:** If the user mentions "needs a port", invent a standard flag like `-p, --port <number>` with a reasonable default (e.g., `8080`).
 - **Terminal Realism:** Do not use bold (`**`) or italics (`*`) inside the `text` code block, as standard terminals do not render Markdown. Use uppercase letters for headers (e.g., `OPTIONS:`).
+
+## Gotchas
+- Do not echo secrets or realistic credentials from examples; replace them with placeholders.
+- Do not overfit POSIX style if the user's ecosystem has established conventions, such as `kubectl`, `git`, or npm-style subcommands.
+- Keep examples runnable-looking, but avoid inventing destructive commands unless the user explicitly provided that behavior.

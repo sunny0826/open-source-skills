@@ -1,6 +1,6 @@
 ---
 name: prompt-reviewer
-description: Review a prompt to identify ambiguities, missing constraints, and hallucination risks, and provide an optimized version.
+description: "Use when the user asks to review, debug, rewrite, strengthen, or optimize a prompt; identify ambiguity, missing context, weak constraints, output format issues, evaluation criteria gaps, prompt-injection risk, or hallucination risk; or produce a clearer ready-to-use prompt."
 ---
 
 # Prompt Reviewer
@@ -40,6 +40,11 @@ Please provide your review in the following structured Markdown format:
 ```
 
 **CRITICAL INSTRUCTIONS:**
-- Always respond in Chinese, as requested by the user's base rules.
+- If the user writes in Chinese, respond in Chinese. If the user writes in English, respond in English unless they request another language.
 - Be constructive and precise in your feedback.
 - Ensure the optimized prompt is well-structured, clear, and robust.
+
+## Gotchas
+- Do not make the optimized prompt longer just to sound more complete; preserve the user's likely intent and add only useful constraints.
+- Separate missing information from assumptions so the user can decide what to fill in.
+- Flag requests that require current facts, private data, or unverifiable claims as grounding risks.

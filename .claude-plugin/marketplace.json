@@ -48,9 +48,9 @@
       ]
     },
     {
-      "name": "openrank-metrics",
+      "name": "openrank",
       "description": "Fetch and analyze OpenRank and other statistical metrics (Activity, Stars, Technical Fork, Attention) for an open source repository or developer using OpenDigger data. Supports checking latest metrics, recent trends, and fetching comprehensive data tables for specific periods (e.g., 2024, 2023-05).",
-      "source": "./skills/openrank-metrics",
+      "source": "./skills/openrank",
       "category": "developer_tools",
       "keywords": [
         "openrank",
@@ -63,7 +63,7 @@
         "contributors"
       ],
       "skills": [
-        "./skills/openrank-metrics"
+        "./skills/openrank"
       ]
     },
     {

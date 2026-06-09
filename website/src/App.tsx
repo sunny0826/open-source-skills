@@ -11,7 +11,7 @@ import { skills } from './data/skills';
 type Language = 'en' | 'zh';
 type Installer = 'npx' | 'clawhub';
 
-const recommendedIds = ['open-source-license', 'open-source-analysis', 'openrank-metrics'];
+const recommendedIds = ['open-source-license', 'open-source-analysis', 'openrank'];
 
 const agents = [
   { name: 'AMP', url: 'https://ampcode.com/', logo: 'https://www.google.com/s2/favicons?domain_url=https://ampcode.com&sz=64' },

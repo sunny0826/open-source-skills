@@ -33,8 +33,8 @@ export const skills: Skill[] = [
     icon: Activity
   },
   {
-    id: 'openrank-metrics',
-    name: 'openrank-metrics',
+    id: 'openrank',
+    name: 'openrank',
     description: {
       en: 'Query OpenRank values, activity, and other statistical metrics for GitHub/Gitee open source projects or developers based on OpenDigger data.',
       zh: '基于 OpenDigger 数据源，查询 GitHub/Gitee 开源项目或开发者的 OpenRank 值、活跃度等各项统计指标。'

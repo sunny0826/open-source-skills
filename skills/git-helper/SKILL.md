@@ -1,6 +1,6 @@
 ---
 name: git-helper
-description: "A comprehensive Git command assistant and workflow guide. Trigger whenever the user asks how to perform a specific Git operation, wants to know what a Git command does, needs help fixing a Git mistake, or wants guidance on Git best practices (like branching, rebasing, or squashing)."
+description: "Use when the user asks how to perform, explain, or recover from a Git operation: status/log inspection, branching, staging, commits, amend, reset, revert, rebase, merge conflicts, stash, reflog, submodules, remotes, force-push safety, or rewriting history."
 ---
 
 # Git Helper Skill
@@ -102,3 +102,8 @@ git log --oneline origin/main -n 3
 
 ### 5. Safety Warnings & Pro Tips
 - **Pro Tip:** It is generally safer to use `git fetch` first to review what changes are coming down, and then manually merge or rebase. Alternatively, you can use `git pull --rebase` to keep a cleaner, linear commit history without unnecessary merge commits.
+
+## Gotchas
+- Always distinguish local-only history from pushed/shared history before suggesting `reset`, `rebase`, `commit --amend`, or force push.
+- `git reflog` helps recover commits and branch movements, but it does not recover uncommitted files deleted by `reset --hard` or `git clean`.
+- For leaked secrets, history rewriting is not enough; tell the user to revoke and rotate the credential first.

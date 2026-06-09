@@ -1,6 +1,6 @@
 ---
 name: contributor-guide-writer
-description: "Analyze the current project structure, package manager, and build tools to generate a comprehensive, standardized CONTRIBUTING.md file. Trigger when the user asks to write or generate a contributing guide, or wants to know how to set up the project locally for development."
+description: "Use when the user asks to create, revise, or audit a CONTRIBUTING.md/contributor guide, onboarding instructions, local development setup, test/lint workflow, PR process, commit conventions, or open-source contribution guidance for a repository."
 ---
 
 # Contributor Guide Writer Skill
@@ -145,3 +145,8 @@ By participating in this project, you agree to abide by our Code of Conduct. Ple
 ## Important Rules:
 - **Be Accurate:** Do not hallucinate build commands. If you can't find a test script in `package.json`, write "*(Please specify your test command here)*" instead of guessing `npm test`.
 - **Project Name:** Infer the project name from the directory name, `package.json`, or `README.md`.
+
+## Gotchas
+- Prefer discovered commands over generic defaults; if a command is not present, mark it as TODO instead of guessing.
+- Do not overwrite an existing `CONTRIBUTING.md` without first preserving useful project-specific content.
+- Mention missing community files such as CODE_OF_CONDUCT or issue templates as suggestions, not as facts.

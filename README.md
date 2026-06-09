@@ -20,7 +20,7 @@ clawhub install cli-help-writer
 | :--- | :--- | :--- | :--- |
 | `open-source-license` | `skills/open-source-license/` | 开源许可证选型、对比、兼容性分析、合规检查、LICENSE/NOTICE/Header 生成，额外支持木兰宽松许可证第 2 版。 | [README](./skills/open-source-license/README.md) |
 | `open-source-analysis` | `skills/open-source-analysis/` | 分析 GitHub 开源项目并生成包含技术栈、数据、活跃度评分及多维度评价的结构化分析报告（支持中英双语）。 | [README](./skills/open-source-analysis/README.md) |
-| `openrank-metrics` | `skills/openrank-metrics/` | 基于 OpenDigger 数据源，查询 GitHub/Gitee 开源项目或开发者的 OpenRank 值、活跃度等各项统计指标，并支持按指定周期生成指标全貌表格。 | [README](./skills/openrank-metrics/README.md) |
+| `openrank` | `skills/openrank/` | 基于 OpenDigger 数据源，查询 GitHub/Gitee 开源项目或开发者的 OpenRank 值、活跃度等各项统计指标，并支持按指定周期生成指标全貌表格。 | [README](./skills/openrank/README.md) |
 | `git-helper` | `skills/git-helper/` | 详尽的 Git 命令助手与工作流指南。支持按需翻译意图为具体命令，并针对破坏性操作提供安全警告。 | [README](./skills/git-helper/README.md) |
 | `pr-description` | `skills/pr-description/` | 自动根据 Git diff 纯文本内容或文字描述，生成规范的、包含复选框的 Pull Request (PR) Description。 | [README](./skills/pr-description/README.md) |
 | `release-notes` | `skills/release-notes/` | 从 commit 记录纯文本中提取并生成结构化的发版说明，自动进行 Breaking Change / Feature / Fix 分类。 | [README](./skills/release-notes/README.md) |
@@ -54,7 +54,7 @@ clawhub install cli-help-writer
 ```bash
 /plugin install open-source-license@open-source-skills
 /plugin install open-source-analysis@open-source-skills
-/plugin install openrank-metrics@open-source-skills
+/plugin install openrank@open-source-skills
 /plugin install git-helper@open-source-skills
 /plugin install pr-description@open-source-skills
 /plugin install release-notes@open-source-skills
@@ -127,7 +127,7 @@ https://github.com/vuejs/core
 Analyze https://github.com/actionbook/actionbook
 ```
 
-以 `openrank-metrics` 为例，可以直接这样提问：
+以 `openrank` 为例，可以直接这样提问：
 
 ```text
 查询一下 X-lab2017/open-digger 的最新 OpenRank 数据和近期趋势
@@ -250,7 +250,7 @@ open-source-skills/
 │   │   ├── README.md
 │   │   └── evals/
 │   │       └── evals.json
-│   ├── openrank-metrics/
+│   ├── openrank/
 │   │   ├── SKILL.md
 │   │   ├── README.md
 │   │   └── evals/

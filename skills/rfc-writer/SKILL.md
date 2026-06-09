@@ -1,6 +1,6 @@
 ---
 name: rfc-writer
-description: "Draft a technical Request for Comments (RFC) or technical proposal document based on a rough idea or scattered requirements. Triggers when the user asks to write an RFC, draft a technical proposal, or structure an architecture design."
+description: "Use when the user asks to draft, structure, review, or expand an RFC, technical proposal, architecture design, design doc, ADR-style decision, migration plan, system change, alternatives analysis, rollout plan, risks, tradeoffs, or unresolved questions."
 ---
 
 # RFC Writer Skill
@@ -91,3 +91,8 @@ Always structure your response using the following Markdown template (adapt head
 ## Important Rules:
 - **Be Objective:** Maintain a professional, objective tone. Avoid emotional language.
 - **Think Critically:** If the user's idea has an obvious critical flaw (e.g., severe security risk), highlight it strongly in the "Cons & Risks" or "Unresolved Questions" section.
+
+## Gotchas
+- Do not turn a vague idea into fake certainty; mark assumptions and unresolved questions explicitly.
+- Prefer concrete decision points and tradeoffs over generic architecture prose.
+- Keep implementation detail proportional to the user's input; do not invent full system designs unless asked.

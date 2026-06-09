@@ -1,4 +1,4 @@
-# openrank-metrics
+# openrank
 
 ## 功能说明
 这个 skill 旨在对接开源项目与社区生态指标系统 **OpenDigger**（基于 `oss.open-digger.cn` 数据源），根据用户提供的 GitHub 或 Gitee 仓库地址/开发者名称，快速查询并展示各类开源统计数据。

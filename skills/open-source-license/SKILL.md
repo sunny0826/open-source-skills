@@ -1,6 +1,6 @@
 ---
 name: "open-source-license"
-description: "Open Source License guidance, selection, compliance review, and drafting. Use this skill when users ask about choosing open source licenses, checking license compatibility, reviewing projects for OSS compliance, generating LICENSE/NOTICE files, or understanding specific license terms. Triggers include questions about MIT, Apache, GPL, BSD, LGPL, AGPL, MPL, copyleft, permissive licenses, license compatibility, SPDX identifiers, 木兰宽松许可证, Mulan PSL v2, or any OSS licensing topic."
+description: "Use when the user asks about open-source license choice, compatibility, compliance, SPDX identifiers, LICENSE/NOTICE files, source headers, copyleft/permissive tradeoffs, MIT, Apache-2.0, GPL, LGPL, AGPL, BSD, MPL, 木兰宽松许可证, Mulan PSL v2, or OSS licensing terms."
 ---
 
 ## Legal Disclaimer
@@ -174,3 +174,8 @@ When reviewing compliance:
 2. Show compatibility analysis
 3. Flag any issues with severity (critical/warning/info)
 4. Provide specific remediation steps
+
+## Gotchas
+- This skill gives informational guidance, not legal advice; recommend counsel for high-risk commercial, copyleft, patent, or jurisdiction-specific decisions.
+- Use canonical license text from bundled references when generating files; do not paraphrase license bodies.
+- Compatibility depends on how code is linked, distributed, modified, or offered as a network service; ask for that context when it changes the answer.

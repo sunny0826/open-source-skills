@@ -1,6 +1,6 @@
 ---
 name: openrank
-description: "Fetch and analyze OpenRank and other statistical metrics for an open source repository or developer using OpenDigger data. Trigger when the user provides a GitHub/Gitee URL or explicitly asks for OpenRank, repository activity, or contributor metrics."
+description: "Use when the user asks for OpenRank, OpenDigger metrics, repository/developer activity, community OpenRank, stars/attention trends, contributor metrics, issue/PR metrics, or month/quarter/year metric tables for a GitHub or Gitee project/user."
 ---
 
 # OpenRank Skill
@@ -153,3 +153,8 @@ To do this, you must dynamically fetch all the endpoints listed in the **Support
 | *(And so on)* | ... | ... |
 
 *(Note: If a metric has no data for this period, insert `-` or `N/A`)*
+
+## Gotchas
+- OpenDigger JSON keys are period strings; verify whether the user requested a month, quarter, or year before selecting values.
+- If a metric endpoint is missing or a period has no value, show `-` or `N/A` rather than inventing a number.
+- Distinguish repository paths (`platform/owner/repo`) from developer paths (`platform/login`) before building URLs.
