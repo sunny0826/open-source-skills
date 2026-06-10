@@ -37,7 +37,7 @@ const translations = {
     heroLabel: 'Skill catalog for maintainers',
     heroTitle: 'Agent skills for open source work',
     heroDesc:
-      'Install focused skills for license review, repository analysis, PR writing, release notes, issue triage, contributor docs, and prompt review',
+      'Install focused skills for license review, repository analysis, PR writing, release notes, issue triage, contributor docs, prompt review, and skill design',
     copyInstall: 'Copy install command',
     copied: 'Copied',
     commandLabel: 'Install command',
@@ -69,7 +69,7 @@ const translations = {
     heroLabel: '面向维护者的 Skill 目录',
     heroTitle: '开源 Agent Skill',
     heroDesc:
-      '安装面向许可证审查、仓库分析、PR 描述、发版说明、Issue 分诊、贡献指南和 Prompt 审查的专用技能',
+      '安装面向许可证审查、仓库分析、PR 描述、发版说明、Issue 分诊、贡献指南、Prompt 审查和 Skill 设计的专用技能',
     copyInstall: '复制安装命令',
     copied: '已复制',
     commandLabel: '安装命令',

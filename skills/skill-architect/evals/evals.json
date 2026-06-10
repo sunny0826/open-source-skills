@@ -1,0 +1,17 @@
+{
+  "skill_name": "skill-architect",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我把我们团队的发布检查流程整理成一个 Claude Code Skill，流程包括跑 CI、部署 canary、检查错误率、确认 smoke test、必要时回滚。",
+      "expected_output": "A Chinese Skill design proposal. It should identify CI/CD and deployment as the primary category, recommend a focused skill name, propose a folder structure, draft trigger-focused SKILL.md content with gotchas, validation steps, rollback guardrails, and suggest evals or scripts only where useful.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Review this SKILL.md for quality: it says 'This skill helps with engineering tasks' and then lists generic advice like read the code, write tests, and be careful.",
+      "expected_output": "A review-style response with findings ordered by severity. It should flag the vague trigger description, overly broad scope, obvious low-signal body, missing gotchas, missing validation criteria, and recommend a narrower primary category plus concrete trigger phrases.",
+      "files": []
+    }
+  ]
+}

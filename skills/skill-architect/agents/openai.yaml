@@ -1,0 +1,4 @@
+interface:
+  display_name: "Skill Architect"
+  short_description: "Design, review, and iterate high-quality agent skills"
+  default_prompt: "Use $skill-architect to turn this workflow into a robust, maintainable Skill."

@@ -30,6 +30,7 @@ clawhub install cli-help-writer
 | `rfc-writer` | `skills/rfc-writer/` | 将模糊的技术想法扩写为标准的、专业的 RFC（技术提案）文档，自动补全背景、优缺点及替代方案考量。 | [README](./skills/rfc-writer/README.md) |
 | `cli-help-writer` | `skills/cli-help-writer/` | 将零散的命令行参数与说明转化为排版精美、符合 POSIX 标准的终端 `--help` 文案或 Man Page，并自动脱敏敏感参数。 | [README](./skills/cli-help-writer/README.md) |
 | `prompt-reviewer` | `skills/prompt-reviewer/` | 审查 Prompt，找出歧义、遗漏约束、潜在幻觉风险，并提供改进建议与优化后的 Prompt。 | [README](./skills/prompt-reviewer/README.md) |
+| `skill-architect` | `skills/skill-architect/` | 设计、审查和迭代 AI Agent Skill，将 Claude Code Skills 实践转成可维护的 SKILL.md、references、evals 与分发/度量策略。 | [README](./skills/skill-architect/README.md) |
 | `readme-grader` | `skills/readme-grader/` | 评估开源项目 README 文本，从简介、安装、使用、贡献等 5 个维度打分并提供具体的改进建议。 | [README](./skills/readme-grader/README.md) |
 
 ## Installation
@@ -64,6 +65,7 @@ clawhub install cli-help-writer
 /plugin install rfc-writer@open-source-skills
 /plugin install cli-help-writer@open-source-skills
 /plugin install prompt-reviewer@open-source-skills
+/plugin install skill-architect@open-source-skills
 /plugin install readme-grader@open-source-skills
 ```
 
@@ -219,6 +221,12 @@ CMD ["npm", "start"]
 帮我审查一下这个 Prompt：“写一篇关于中国历史的文章。”
 ```
 
+以 `skill-architect` 为例，可以直接这样提问：
+
+```text
+帮我把我们团队的发布检查流程整理成一个 Claude Code Skill，要求包含回滚确认和 smoke test。
+```
+
 以 `readme-grader` 为例，可以直接这样提问：
 
 ```text
@@ -270,6 +278,14 @@ open-source-skills/
 │   │   ├── README.md
 │   │   └── evals/
 │   │       └── evals.json
+│   ├── skill-architect/
+│   │   ├── SKILL.md
+│   │   ├── README.md
+│   │   ├── agents/
+│   │   │   └── openai.yaml
+│   │   ├── evals/
+│   │   │   └── evals.json
+│   │   └── references/
 │   ├── readme-grader/
 │   │   ├── SKILL.md
 │   │   ├── README.md

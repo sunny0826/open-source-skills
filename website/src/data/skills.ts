@@ -1,4 +1,4 @@
-import { FileText, ShieldCheck, Activity, GitBranch, GitMerge, FileSignature, AlertCircle, Box, BookOpen, Terminal, CheckSquare } from 'lucide-react';
+import { FileText, ShieldCheck, Activity, GitBranch, GitMerge, FileSignature, AlertCircle, Box, BookOpen, Terminal, CheckSquare, DraftingCompass } from 'lucide-react';
 
 export interface Skill {
   id: string;
@@ -131,6 +131,16 @@ export const skills: Skill[] = [
     },
     category: 'developer_tools',
     icon: CheckSquare
+  },
+  {
+    id: 'skill-architect',
+    name: 'skill-architect',
+    description: {
+      en: 'Design, review, and iterate AI Agent Skills by turning Claude Code Skills practices into maintainable SKILL.md files, references, evals, rollout plans, and measurement strategies.',
+      zh: '设计、审查和迭代 AI Agent Skill，将 Claude Code Skills 实践转成可维护的 SKILL.md、references、evals、分发计划和度量策略。'
+    },
+    category: 'developer_tools',
+    icon: DraftingCompass
   },
   {
     id: 'readme-grader',
