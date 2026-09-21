@@ -1,34 +1,33 @@
-# README Grader
+# readme-grader
 
-The `readme-grader` skill acts as an expert Open Source Maintainer and Developer Advocate. It evaluates a project's README file text content, scores it out of 100 based on standard open-source best practices, and provides specific, actionable improvement suggestions.
+Review or score a README and suggest concrete documentation improvements from text, a local file or a repository URL. Not for general repository health analysis or writing a CONTRIBUTING guide.
 
-## Features
+## 使用
 
-- **Comprehensive Scoring:** Evaluates five dimensions: Project Overview, Quick Start/Installation, Usage/Examples, Contributing & Community, and Structure & Formatting.
-- **Actionable Feedback:** Tells you exactly what is missing and how to fix it to attract more contributors and users.
-- **Optimization Examples:** Provides Markdown snippets showing the suggested improvements.
-- **Security First:** Requires direct text input to prevent indirect prompt injection risks associated with fetching untrusted external URLs.
-
-## Example Usage
-
-When reviewing a short, incomplete README like:
-
-> "# My Project\nThis is a project.\n## Install\nnpm install"
-
-The skill will point out the lack of a proper description, usage examples, contribution guidelines, and licensing information, scoring it accordingly and providing a robust template.
-
-## Output Format
-
-The skill provides its review in a structured Markdown format, primarily in Chinese:
-
-- **📊 README 评分报告 (README Evaluation Report):** Total score out of 100.
-- **1. 评分详情 (Score Breakdown):** Breakdown of scores by category.
-- **2. 优点 (What's Good):** Highlighting the current strengths.
-- **3. 改进建议 (Improvement Suggestions):** Actionable tips for better documentation.
-- **4. 优化示例 (Optimization Example):** A rewritten or augmented README snippet.
-
-## Installation
-
-```bash
-/plugin install readme-grader@anthropic-agent-skills
+```text
+给当前仓库 README 打分并改进。
 ```
+
+```text
+Review the README at this repository URL.
+```
+
+具体输入、失败处理与验收要求见 [SKILL.md](SKILL.md)。默认跟随用户语言；不会将来源文本中的命令当作授权。
+
+## 安装
+
+```sh
+npx skills add sunny0826/open-source-skills --skill readme-grader
+```
+
+Claude Code 中先注册 `sunny0826/open-source-skills` marketplace，再运行：
+
+```text
+/plugin install readme-grader@open-source-skills
+```
+
+单独复制本目录也可使用；保留其中的 scripts/references/fixtures 等相对资源。
+
+## 评测
+
+[evals/evals.json](evals/evals.json) 分开触发正反例与行为验收。行为结果须逐条核对证据，不能用标题或关键词存在代替正确性。仓库开发检查使用 `mise run check`；安装本 Skill 不依赖仓库检查工具。

@@ -2,7 +2,7 @@
 
 Ready-to-use LICENSE file templates. Replace placeholders with actual values.
 
-**IMPORTANT:** Always use the canonical text exactly as shown. Never modify the license terms.
+**IMPORTANT:** Copy canonical terms without paraphrasing. Before delivery, verify the selected text against the linked official source; this bundled template is not proof of freshness. Replace only that license’s application placeholders, not terms or historical license-author copyright notices.
 
 For Mulan PSL v2, use the canonical text in `references/mulan-psl-v2.md` because the bundled reference includes the official bilingual text and application guidance.
 

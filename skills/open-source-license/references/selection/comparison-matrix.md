@@ -1,174 +1,28 @@
-# Open Source License Comparison Matrix
+# License Comparison Dimensions
 
-## Quick Reference Table
+This compares characteristic provisions, not compatibility for a particular work.
 
-| License | Type | Copyleft | Patent Grant | Attribution | Commercial | Notable Projects |
-|---------|------|----------|--------------|-------------|------------|------------------|
-| MIT | Permissive | No | No | Yes | Yes | React, Node.js, Rails, jQuery |
-| Apache-2.0 | Permissive | No | Yes | Yes | Yes | Kubernetes, TensorFlow, Android |
-| BSD-2-Clause | Permissive | No | No | Yes | Yes | FreeBSD, nginx |
-| BSD-3-Clause | Permissive | No | No | Yes | Yes | Django, Flask, Go |
-| ISC | Permissive | No | No | Yes | Yes | npm, OpenBSD |
-| Mulan PSL v2 | Permissive | No | Yes | Yes | Yes | Common in Chinese OSS ecosystems |
-| Unlicense | Public Domain | No | No | No | Yes | youtube-dl |
-| GPL-3.0 | Strong Copyleft | Yes | Yes | Yes | Yes* | WordPress, GIMP, Bash |
-| GPL-2.0 | Strong Copyleft | Yes | No | Yes | Yes* | Linux kernel, Git |
-| LGPL-3.0 | Weak Copyleft | File-level | Yes | Yes | Yes | GTK, glibc |
-| AGPL-3.0 | Network Copyleft | Yes | Yes | Yes | Yes* | Nextcloud, Mastodon |
-| MPL-2.0 | Weak Copyleft | File-level | Yes | Yes | Yes | Firefox, Terraform (old) |
-| EPL-2.0 | Weak Copyleft | Module-level | Yes | Yes | Yes | Eclipse IDE, JUnit 5 |
+| Family | Main decision point | Conditions to preserve |
+| --- | --- | --- |
+| MIT / BSD | Short permissive terms; no express patent grant clause | Copyright, license, disclaimer; BSD variant-specific clauses |
+| Apache-2.0 | Express patent grant with scope/termination terms | License, modification notices and applicable NOTICE attribution |
+| MulanPSL-2.0 | Permissive bilingual text and express patent provisions | Its own distribution/notices and Chinese-text precedence |
+| MPL-2.0 | File-level copyleft | Covered source and applicable secondary-license conditions |
+| LGPL | Library/combined-work rules | Exact version, source/relinking and notices |
+| GPL | Strong copyleft on covered distributions | Exact version/exceptions and corresponding-source obligations |
+| AGPL | GPL-like distribution duties plus network provision | Modified remote-interactive versions and section 13 scope |
 
-*Commercial use allowed but copyleft obligations apply
+MIT's lack of an express patent clause is not a definitive ruling on implied
+patent rights. All these licenses have conditions; none guarantees immunity from
+patent claims. Distinguish copyright permission, patent permission and trademarks.
+For code compatibility read [../compliance/compatibility.md](../compliance/compatibility.md).
 
----
+- [OSI license list](https://opensource.org/licenses)
+- [Apache 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+- [MPL 2.0](https://www.mozilla.org/en-US/MPL/2.0/)
 
-## Detailed Feature Comparison
+## Sources and review boundary
 
-### Permissions
-
-| License | Commercial Use | Distribution | Modification | Private Use | Patent Use |
-|---------|---------------|--------------|--------------|-------------|------------|
-| MIT | ✅ | ✅ | ✅ | ✅ | ❌ (implicit) |
-| Apache-2.0 | ✅ | ✅ | ✅ | ✅ | ✅ |
-| BSD-3-Clause | ✅ | ✅ | ✅ | ✅ | ❌ (implicit) |
-| GPL-3.0 | ✅ | ✅ | ✅ | ✅ | ✅ |
-| GPL-2.0 | ✅ | ✅ | ✅ | ✅ | ❌ |
-| LGPL-3.0 | ✅ | ✅ | ✅ | ✅ | ✅ |
-| AGPL-3.0 | ✅ | ✅ | ✅ | ✅ | ✅ |
-| MPL-2.0 | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Mulan PSL v2 | ✅ | ✅ | ✅ | ✅ | ✅ |
-
-### Conditions (Requirements)
-
-| License | License Copy | Copyright Notice | State Changes | Disclose Source | Same License |
-|---------|-------------|------------------|---------------|-----------------|--------------|
-| MIT | ✅ | ✅ | ❌ | ❌ | ❌ |
-| Apache-2.0 | ✅ | ✅ | ✅ | ❌ | ❌ |
-| BSD-3-Clause | ✅ | ✅ | ❌ | ❌ | ❌ |
-| GPL-3.0 | ✅ | ✅ | ✅ | ✅ | ✅ |
-| GPL-2.0 | ✅ | ✅ | ✅ | ✅ | ✅ |
-| LGPL-3.0 | ✅ | ✅ | ✅ | ✅ (for library) | ✅ (for library) |
-| AGPL-3.0 | ✅ | ✅ | ✅ | ✅ (including SaaS) | ✅ |
-| MPL-2.0 | ✅ | ✅ | ✅ | ✅ (per file) | ✅ (per file) |
-| Mulan PSL v2 | ✅ | ✅ | ❌ | ❌ | ❌ |
-
-### Limitations
-
-| License | Liability | Warranty | Trademark | Patent Claims |
-|---------|-----------|----------|-----------|---------------|
-| MIT | ✅ Limited | ✅ None | ❌ | ❌ |
-| Apache-2.0 | ✅ Limited | ✅ None | ✅ No grant | ✅ Retaliation |
-| BSD-3-Clause | ✅ Limited | ✅ None | ✅ No endorsement | ❌ |
-| GPL-3.0 | ✅ Limited | ✅ None | ❌ | ✅ Retaliation |
-| LGPL-3.0 | ✅ Limited | ✅ None | ❌ | ✅ Retaliation |
-| AGPL-3.0 | ✅ Limited | ✅ None | ❌ | ✅ Retaliation |
-| MPL-2.0 | ✅ Limited | ✅ None | ✅ No grant | ✅ Retaliation |
-| Mulan PSL v2 | ✅ Limited | ✅ None | ✅ No grant | ✅ Retaliation |
-
----
-
-## Copyleft Strength Comparison
-
-```
-Most Permissive ←————————————————————————————→ Most Restrictive
-
-Unlicense  MIT  BSD  Apache  MPL  LGPL  EPL  GPL  AGPL
-    │       │    │     │      │    │     │    │     │
-    └───────┴────┴─────┴──────┴────┴─────┴────┴─────┘
-         Public          Weak Copyleft    Strong    Network
-         Domain/         (file/module)    Copyleft  Copyleft
-         Permissive
-```
-
-### Copyleft Scope Explained
-
-| Type | Scope | Derivative Works | Linking |
-|------|-------|------------------|---------|
-| None (Permissive) | N/A | Can be proprietary | No restrictions |
-| File-level (MPL) | Modified files only | New files can be proprietary | No restrictions |
-| Library-level (LGPL) | Library code only | Applications can be proprietary | Dynamic linking OK |
-| Strong (GPL) | Entire program | Must be GPL | Static/dynamic triggers copyleft |
-| Network (AGPL) | Entire program + SaaS | Must be AGPL | Network use triggers copyleft |
-
----
-
-## Use Case Recommendations
-
-### For Maximum Adoption
-
-**Recommended:** MIT, Apache-2.0, BSD-3-Clause, Mulan PSL v2
-
-Best for:
-- Libraries intended for wide use
-- Projects seeking corporate adoption
-- Startups wanting to maximize user base
-- Projects that want a permissive license with bilingual Chinese/English canonical text
-
-### For Patent Protection
-
-**Recommended:** Apache-2.0, GPL-3.0, MPL-2.0, Mulan PSL v2
-
-Best for:
-- Projects with patentable innovations
-- Enterprise software
-- Projects concerned about patent trolls
-- Projects that want explicit patent language and a China-origin permissive license
-
-### For Keeping Code Open
-
-**Recommended:** GPL-3.0, AGPL-3.0
-
-Best for:
-- Projects wanting contributions back
-- Community-driven development
-- Preventing proprietary forks
-
-### For SaaS/Cloud Protection
-
-**Recommended:** AGPL-3.0
-
-Best for:
-- Server-side applications
-- APIs and web services
-- Preventing cloud providers from using without contributing
-
-### For Libraries
-
-**Recommended:** MIT, Apache-2.0, LGPL-3.0, MPL-2.0
-
-Best for:
-- Reusable components
-- SDKs and frameworks
-- Code meant to be embedded
-
----
-
-## Corporate Acceptance
-
-### Generally Accepted by Most Companies
-
-- MIT
-- Apache-2.0
-- Mulan PSL v2
-- BSD-2-Clause
-- BSD-3-Clause
-- ISC
-- Unlicense/CC0
-
-### Often Accepted with Review
-
-- LGPL-3.0 (dynamic linking usually OK)
-- MPL-2.0 (file-level copyleft manageable)
-- EPL-2.0
-
-### Often Restricted/Prohibited
-
-- GPL-2.0/3.0 (except for development tools)
-- AGPL-3.0 (almost always prohibited)
-
-### Red Flags (Not True Open Source)
-
-- SSPL
-- BSL/BUSL
-- Elastic License
-- Any "Commons Clause"
+Reviewed 2026-09-21. These notes are conditional guidance, not a replacement for
+the exact license/version and facts of the combination. Verify the linked primary
+source when using a rule; do not infer a project's current license from examples.

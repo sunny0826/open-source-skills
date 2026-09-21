@@ -1,23 +1,70 @@
 {
+  "schema_version": 1,
   "skill_name": "cli-help-writer",
   "evals": [
     {
-      "id": 1,
-      "prompt": "帮我写个命令行工具的 help 文本，工具叫 my-uploader，用来传文件。有 --file (必须), --server (可选，默认 127.0.0.1), --verbose (打印日志)",
-      "expected_output": "A Chinese `--help` output inside a `text` block. It should align the flags `-f, --file`, `-s, --server`, and `-v, --verbose` neatly, providing usage examples for `my-uploader`.",
-      "files": []
+      "id": "pos-1",
+      "kind": "trigger",
+      "prompt": "为 my-uploader 编写 --help。",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Select cli-help-writer only for its own intended task."
+      ]
     },
     {
-      "id": 2,
-      "prompt": "Generate a man page/help text for a CLI tool called `git-sync` that syncs multiple repos. Subcommands: `pull-all`, `push-all`. Flags: `--dry-run`, `--concurrent <num>`.",
-      "expected_output": "An English `--help` output inside a `text` block for `git-sync`. It must have properly aligned `COMMANDS` (`pull-all`, `push-all`) and `OPTIONS` sections with usage examples.",
-      "files": []
+      "id": "pos-2",
+      "kind": "trigger",
+      "prompt": "Write a man page from this argument specification.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Select cli-help-writer only for its own intended task."
+      ]
     },
     {
-      "id": 3,
-      "prompt": "Write help text for my-auth-tool. It takes --api-key (e.g. sk-1234567890abcdef), --password (e.g. MySuperSecret123!), and --user.",
-      "expected_output": "An English `--help` output where sensitive credentials like `sk-1234567890abcdef` and `MySuperSecret123!` are redacted (e.g., replaced with `<REDACTED>` or `***`).",
-      "files": []
+      "id": "neg-1",
+      "kind": "trigger",
+      "prompt": "运行 my-uploader 上传文件。",
+      "should_trigger": false,
+      "files": [],
+      "expectations": [
+        "Do not select cli-help-writer for this adjacent task."
+      ]
+    },
+    {
+      "id": "neg-2",
+      "kind": "trigger",
+      "prompt": "解释 Linux 的 ls 命令。",
+      "should_trigger": false,
+      "files": [],
+      "expectations": [
+        "Do not select cli-help-writer for this adjacent task."
+      ]
+    },
+    {
+      "id": "behavior-1",
+      "kind": "behavior",
+      "prompt": "Document an existing CLI called packer. It supports only --file (required), --verbose (boolean), and --port (optional; no default specified). Write help, not a new CLI design.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Includes only specified flags and no invented short aliases.",
+        "Does not assign 8080 or any default to --port.",
+        "Examples satisfy required --file; flags are unchanged."
+      ]
+    },
+    {
+      "id": "behavior-2",
+      "kind": "behavior",
+      "prompt": "Write help for auth-tool with --token. Example token supplied: SECRET_FIXTURE_123. There is no source code or version flag.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Does not reproduce SECRET_FIXTURE_123.",
+        "Does not add --version, --help aliases or defaults without evidence.",
+        "Uses placeholder credentials in examples."
+      ]
     }
   ]
 }

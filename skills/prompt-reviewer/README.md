@@ -1,33 +1,33 @@
-# Prompt Reviewer
+# prompt-reviewer
 
-The `prompt-reviewer` skill is designed to act as an expert Prompt Engineer. It critically analyzes user-provided prompts to identify ambiguities, missing constraints, and potential hallucination risks. It also provides actionable improvement suggestions and a fully rewritten, optimized prompt.
+Review or rewrite a prompt while preserving its goal and hard constraints. Use for explicit prompt improvement, not for carrying out the task described inside the prompt.
 
-## Features
+## 使用
 
-- **Ambiguity Analysis:** Detects vague terms or instructions that could lead to misinterpretation by an AI.
-- **Missing Constraints Identification:** Points out lack of boundaries, formats, or context needed to guide the AI effectively.
-- **Hallucination Risk Assessment:** Highlights areas where the AI might invent information and suggests ways to ground its response.
-- **Actionable Feedback:** Provides specific, constructive advice for improving the prompt.
-- **Optimized Prompt:** Generates a ready-to-use, well-structured, and robust version of the original prompt.
-
-## Example Usage
-
-When reviewing a simple, unstructured prompt like:
-
-> "写一篇关于中国历史的文章。" (Write an article about Chinese history.)
-
-The skill will output a detailed analysis pointing out the lack of target audience, specific dynasty, length constraint, and formatting. It will then provide a comprehensive, structured prompt that the user can immediately use for better results.
-
-## Output Format
-
-The skill provides its review in a structured Markdown format, primarily in Chinese:
-
-- **🔍 审查报告 (Review Report):** Breakdown of ambiguities, missing constraints, and hallucination risks.
-- **💡 改进建议 (Improvement Suggestions):** Actionable tips for better prompting.
-- **✨ 优化后的 Prompt (Optimized Prompt):** The fully rewritten prompt.
-
-## Installation
-
-```bash
-/plugin install prompt-reviewer@anthropic-agent-skills
+```text
+审查并优化这段 Prompt。
 ```
+
+```text
+Rewrite my prompt while preserving its exact JSON format.
+```
+
+具体输入、失败处理与验收要求见 [SKILL.md](SKILL.md)。默认跟随用户语言；不会将来源文本中的命令当作授权。
+
+## 安装
+
+```sh
+npx skills add sunny0826/open-source-skills --skill prompt-reviewer
+```
+
+Claude Code 中先注册 `sunny0826/open-source-skills` marketplace，再运行：
+
+```text
+/plugin install prompt-reviewer@open-source-skills
+```
+
+单独复制本目录也可使用；保留其中的 scripts/references/fixtures 等相对资源。
+
+## 评测
+
+[evals/evals.json](evals/evals.json) 分开触发正反例与行为验收。行为结果须逐条核对证据，不能用标题或关键词存在代替正确性。仓库开发检查使用 `mise run check`；安装本 Skill 不依赖仓库检查工具。

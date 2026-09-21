@@ -1,5 +1,7 @@
 # Source File Header Templates
 
+Verify the exact license expression before copying an example. The GNU examples below use or-later language; do not silently add it to an only license. Preserve third-party headers. SPDX headers do not replace a required full license file.
+
 License headers should be placed at the top of source files to indicate copyright and licensing.
 
 ---

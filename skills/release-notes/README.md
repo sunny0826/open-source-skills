@@ -1,30 +1,33 @@
 # release-notes
 
-## 功能说明
-这个 skill 旨在根据用户提供的纯文本 Commit 记录，自动提取、清洗并生成一份结构化、面向用户的发版说明（Release Notes / Changelog）。它可以：
-- 将杂乱的 Commit 日志提炼并严格分类为：**💥 Breaking Changes (破坏性变更)**、**✨ Features (新特性)**、**🐛 Bug Fixes (问题修复)**。
-- 自动过滤掉对最终用户无意义的噪音提交（如简单的 typo 修复、内部重构、测试用例更新等）。
-- 支持中英双语输出，会根据用户的提问语言自动适配。
-- **安全说明**：为了防止间接提示词注入（Indirect Prompt Injection）等安全风险，此 Skill 不会自动访问外部链接，用户需要直接提供 Commit 记录文本内容。
+Write release notes or changelogs for a version or release range from commits, PRs or release text. Not for describing one PR or creating/publishing a release unless separately requested.
 
-## 使用场景
-在项目发版前，你需要撰写给用户或社区看的 Release Notes，但面对长串的 git log 感到无从下手时，使用这个 skill 可以一键生成排版精美的发版公告。
+## 使用
 
-## 提问示例
-
-**中文模式：**
 ```text
-帮我根据以下 commit 记录生成一份中文的发版说明：
-feat(auth): 新增企业微信登录
-fix(db): 修复并发导致的数据死锁
-chore: 更新 README.md
-BREAKING CHANGE: 移除 v1 版本的 API 接口
+根据这些 commits 写发版说明。
 ```
 
-**英文模式：**
 ```text
-Generate a changelog for these commits:
-feat: add dark mode support
-fix: resolve memory leak in worker thread
-docs: update installation guide
+Summarize the release at this GitHub release URL.
 ```
+
+具体输入、失败处理与验收要求见 [SKILL.md](SKILL.md)。默认跟随用户语言；不会将来源文本中的命令当作授权。
+
+## 安装
+
+```sh
+npx skills add sunny0826/open-source-skills --skill release-notes
+```
+
+Claude Code 中先注册 `sunny0826/open-source-skills` marketplace，再运行：
+
+```text
+/plugin install release-notes@open-source-skills
+```
+
+单独复制本目录也可使用；保留其中的 scripts/references/fixtures 等相对资源。
+
+## 评测
+
+[evals/evals.json](evals/evals.json) 分开触发正反例与行为验收。行为结果须逐条核对证据，不能用标题或关键词存在代替正确性。仓库开发检查使用 `mise run check`；安装本 Skill 不依赖仓库检查工具。

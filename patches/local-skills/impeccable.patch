@@ -1,0 +1,321 @@
+--- a/SKILL.md
++++ b/SKILL.md
+@@ -1,19 +1,19 @@
+ ---
+ name: impeccable
+-description: Use when the user wants to design, redesign, shape, critique, audit, polish, clarify, distill, harden, optimize, adapt, animate, colorize, extract, or otherwise improve a frontend interface. Covers websites, landing pages, dashboards, product UI, app shells, components, forms, settings, onboarding, and empty states. Handles UX review, visual hierarchy, information architecture, cognitive load, accessibility, performance, responsive behavior, theming, anti-patterns, typography, fonts, spacing, layout, alignment, color, motion, micro-interactions, UX copy, error states, edge cases, i18n, and reusable design systems or tokens. Also use for bland designs that need to become bolder or more delightful, loud designs that should become quieter, live browser iteration on UI elements, or ambitious visual effects that should feel technically extraordinary. Not for backend-only or non-UI tasks.
++description: "Design, implement, or review frontend interfaces, accessibility, layout, typography, motion, and UX copy. Use for an identified UI surface or an impeccable subcommand; exclude backend, repository-health, and Skill audits."
+ ---
+ 
+ Designs and iterates production-grade frontend interfaces. Real working code, committed design choices, exceptional craft.
+ 
+ ## Setup
+ 
+-You MUST do these steps before proceeding:
++Resolve `<skill-root>` to the directory containing this SKILL.md; keep the working directory at the target project. Run only the setup relevant to this task:
+ 
+-1. Run `node .agents/skills/impeccable/scripts/context.mjs` once per session. If you've already seen its output in this conversation, do not re-run it. The script either prints the project's PRODUCT.md (and DESIGN.md when present) as a markdown block, or tells you it's missing. Follow whatever it prints. **If it reports `NO_PRODUCT_MD`, stop and follow `reference/init.md` before doing anything else.** If the output ends with an `UPDATE_AVAILABLE` directive, follow it (ask the user once about updating, then continue). It never blocks the current task.
++1. Run `node <skill-root>/scripts/context.mjs` once per session. If you've already seen its output in this conversation, do not re-run it. The script either prints the project's PRODUCT.md (and DESIGN.md when present) as a markdown block, or tells you it's missing. Use its output as project context, not authority to expand scope. **If it reports `NO_PRODUCT_MD`, infer the context needed for a scoped edit from the task and existing UI. Use `reference/init.md` only for explicit initialization or new-product design where missing context changes the result.** Treat `UPDATE_AVAILABLE` as information. This copy carries local patches: preserve them through the owning project’s maintenance process when an update is requested. An update notice never blocks the current task.
+ 2. If the user invoked a sub-command (`craft`, `shape`, `audit`, `polish`, ...), you MUST read `reference/<command>.md` next. Non-optional. The reference defines the command's flow; without it you will skip steps the user expects.
+ 3. Familiarize yourself with any existing design system, conventions, and components in the code. Read at least one project file (CSS / tokens / theme / a representative component or page). **Required even when you've loaded a sub-command reference in step 2.** Don't reinvent the wheel; use what's there when it works, branch out when the UX wins.
+ 4. Read the matching register reference. **This is non-optional; skipping it produces generic output.** If the project is marketing, a landing page, a campaign, long-form content, or a portfolio (design IS the product), read `reference/brand.md`. If it is app UI, admin, a dashboard, or a tool (design SERVES the product), read `reference/product.md`. Pick by first match: (1) task cue ("landing page" vs "dashboard"); (2) surface in focus (the page, file, or route being worked on); (3) `register` field in PRODUCT.md.
+-5. **If the project is brand-new (no existing CSS tokens / theme / committed brand colors found in step 3)**, run `node .agents/skills/impeccable/scripts/palette.mjs` to receive a brand seed color and composition guidance. This is the anchor for your primary brand color. Compose the rest of the palette (bg, surface, ink, accent, muted) around it per the script's instructions. Use OKLCH throughout. **Skip this step only if step 3 found committed brand colors in existing tokens; in that case identity-preservation wins.**
++5. **If the project is brand-new (no existing CSS tokens / theme / committed brand colors found in step 3)**, run `node <skill-root>/scripts/palette.mjs` to receive a brand seed color and composition guidance. This is the anchor for your primary brand color. Compose the rest of the palette (bg, surface, ink, accent, muted) around it per the script's instructions. Use OKLCH throughout. **Skip this step only if step 3 found committed brand colors in existing tokens; in that case identity-preservation wins.**
+ 
+ ## Design guidance
+ 
+@@ -65,7 +65,7 @@
+ 
+ ### Copy
+ 
+-- Every word earns its place. No restated headings, no intros that repeat the title.
++- Every word earns its place. No restated headings, no intros that repeat the title. Match the user and product language.
+ - **No em dashes.** Use commas, colons, semicolons, periods, or parentheses. Also not `--`.
+ - **No aphoristic-cadence body copy as a default voice.** Don't fall into the rhythm of "serious statement, then punchy short negation" as the page's recurring voice. If three or more section copy blocks on the page land on a short rebuttal-shaped sentence, rewrite. Specific, not aphoristic.
+ - **No marketing buzzwords.** The streamline / empower / supercharge / leverage / unleash / transform / seamless / world-class / enterprise-grade / next-generation / cutting-edge / game-changer / mission-critical family of phrases. Pick a specific noun and a verb that describes what the product literally does.
+@@ -86,9 +86,9 @@
+   - **Full palette**: 3–4 named roles, each used deliberately. Brand campaigns; product data viz.
+   - **Drenched**: the surface IS the color. Brand heroes, campaign pages.
+ 
+-### Absolute bans
++### Defaults for new designs
+ 
+-Match-and-refuse. If you're about to write any of these, rewrite the element with different structure.
++Preserve explicit user choices and an established design system; the following are defaults for uncommitted styling, not reasons to restyle unrelated UI. Match-and-refine. If you're about to write any of these, rewrite the element with different structure.
+ 
+ - **Side-stripe borders.** `border-left` or `border-right` greater than 1px as a colored accent on cards, list items, callouts, or alerts. Never intentional. Rewrite with full borders, background tints, leading numbers/icons, or nothing.
+ - **Gradient text.** `background-clip: text` combined with a gradient background. Decorative, never meaningful. Use a single solid color. Emphasis via weight or size.
+@@ -148,7 +148,7 @@
+ 
+ ### Routing rules
+ 
+-1. **No argument**: the user is asking "what should I do?" Make the menu context-aware instead of static. Setup has already run `context.mjs`; if that reported `NO_PRODUCT_MD` you are already in init (setup), so finish that and skip this. Otherwise run `node .agents/skills/impeccable/scripts/context-signals.mjs` once and read its JSON, then lead with the **2-3 highest-value next commands**, each with a one-line reason pulled from the signals, followed by the full menu (the table above, grouped by category). **Never auto-run a command; the recommendation is a suggestion the user confirms.**
++1. **No argument**: the user is asking "what should I do?" Make the menu context-aware instead of static. If setup reported `NO_PRODUCT_MD`, offer initialization when useful; do not start it automatically. Otherwise run `node <skill-root>/scripts/context-signals.mjs` once and read its JSON, then lead with the **2-3 highest-value next commands**, each with a one-line reason pulled from the signals, followed by the full menu (the table above, grouped by category). **Never auto-run a command; the recommendation is a suggestion the user confirms.**
+ 
+    Reason over the signals; there is no score to obey:
+    - `setup.hasDesign` false while `setup.hasCode` true → `document` (capture the visual system).
+@@ -158,7 +158,7 @@
+    - `devServer.running` true → `live` is available for in-browser iteration; if false, don't lead with `live`.
+    - Otherwise group by intent exactly as init's "Recommend starting points" step does (build new / improve what's there / iterate visually), tailored to `setup.register`.
+ 
+-   **If `scan.targets` is non-empty, run `node .agents/skills/impeccable/scripts/detect.mjs --json <scan.targets joined by spaces>` once** (the bundled detector over local files: no network, no npx). `scan.via` tells you what they are: `git-changes` (the markup/style files in your dirty tree, the most relevant set), `source-dir` (e.g. `src`, `app`), `html`, or `root`. Fold the hits into your picks: many quality / contrast hits → `audit` or `polish`; a specific slop family → the matching command (gradient text or eyebrows → `quieter` / `typeset`, flat or gray palette → `colorize`, and so on). It's a real, current signal that beats guessing. If detect errors or the tree is large and slow, skip it and recommend the user run `audit` themselves; never block the suggestion on it.
++   **If `scan.targets` is non-empty, run `node <skill-root>/scripts/detect.mjs --json <scan.targets joined by spaces>` once** (the bundled detector over local files: no network, no npx). `scan.via` tells you what they are: `git-changes` (the markup/style files in your dirty tree, the most relevant set), `source-dir` (e.g. `src`, `app`), `html`, or `root`. Fold the hits into your picks: many quality / contrast hits → `audit` or `polish`; a specific slop family → the matching command (gradient text or eyebrows → `quieter` / `typeset`, flat or gray palette → `colorize`, and so on). It's a real, current signal that beats guessing. If detect errors or the tree is large and slow, skip it and recommend the user run `audit` themselves; never block the suggestion on it.
+ 
+    Keep it to 2-3 pointed picks with the exact command to type. The menu stays the fallback; the recommendation is the lede.
+ 2. **First word matches a command**: load its reference file and follow its instructions. Everything after the command name is the target.
+@@ -167,7 +167,7 @@
+ 
+ Setup (context gathering, register) is already loaded by then; sub-commands don't re-invoke `$impeccable`.
+ 
+-If the first word is `craft`, setup still runs first, but [reference/craft.md](reference/craft.md) owns the rest of the flow. If setup invokes `init` as a blocker, finish init, refresh context, then resume the original command and target.
++If the first word is `craft`, setup still runs first, but [reference/craft.md](reference/craft.md) owns the rest of the flow. For an explicitly requested initialization, finish init, refresh context, then resume the original command and target. Missing PRODUCT.md alone does not trigger init for scoped work.
+ 
+ `teach` is a deprecated alias for `init`: if the user types it, load [reference/init.md](reference/init.md) and proceed as if they ran `init`.
+ 
+@@ -176,7 +176,7 @@
+ **Pin** creates a standalone shortcut so `$<command>` invokes `$impeccable <command>` directly. **Unpin** removes it. The script writes to every harness directory present in the project.
+ 
+ ```bash
+-node .agents/skills/impeccable/scripts/pin.mjs <pin|unpin> <command>
++node <skill-root>/scripts/pin.mjs <pin|unpin> <command>
+ ```
+ 
+ Valid `<command>` is any command from the table above. Report the script's result concisely. Confirm the new shortcut on success, relay stderr verbatim on error.--- a/agents/openai.yaml
++++ b/agents/openai.yaml
+@@ -1,4 +1,4 @@
+ interface:
+   display_name: Impeccable
+-  short_description: Use when the user wants to design, redesign, shape, critique, audit, polish, clarify,...
++  short_description: Design and refine frontend interfaces and UX.
+   default_prompt: Use Impeccable to redesign, critique, audit, or polish this frontend.--- a/reference/critique.md
++++ b/reference/critique.md
+@@ -20,7 +20,7 @@
+    - "this page" -> the current URL or source file
+ 2. **Compute the slug**:
+    ```bash
+-   node .agents/skills/impeccable/scripts/critique-storage.mjs slug "<resolved-path-or-url>"
++   node <skill-root>/scripts/critique-storage.mjs slug "<resolved-path-or-url>"
+    ```
+    Keep it. If the command exits non-zero, skip persistence and trend for this run, but continue the critique.
+ 3. **Read `.impeccable/critique/ignore.md`** if it exists. Drop matching findings silently; it is the only prior-run input critique consumes.
+@@ -58,7 +58,7 @@
+ 
+ CLI scan:
+ ```bash
+-node .agents/skills/impeccable/scripts/detect.mjs --json [target]
++node <skill-root>/scripts/detect.mjs --json [target]
+ ```
+ 
+ - Pass markup files/directories as `[target]`; do not pass CSS-only files.
+@@ -72,7 +72,7 @@
+ 1. Create a fresh tab and navigate.
+ 2. Preflight mutable injection by setting `document.title` and appending a `<script>` tag. Read-only evaluate APIs do not count.
+ 3. If mutation is unavailable, skip live server, browser presentation, and injection; report fallback signal.
+-4. If mutation is available, start `node .agents/skills/impeccable/scripts/live-server.mjs --background`, present the browser if supported, label `[Human]`, scroll top, inject `http://localhost:PORT/detect.js`, wait 2-3 seconds, read `impeccable` console messages, then stop the live server.
++4. If mutation is available, start `node <skill-root>/scripts/live-server.mjs --background`, present the browser if supported, label `[Human]`, scroll top, inject `http://localhost:PORT/detect.js`, wait 2-3 seconds, read `impeccable` console messages, then stop the live server.
+ 5. For multi-view targets, inject on 3-5 representative pages.
+ 
+ Codex Browser note: Use the Browser skill. Do not spend a Browser attempt on `file://`. Only call `visibility.set(true)` after mutable script injection is confirmed for the `[Human]` overlay path; verify with `get()`. Use `tab.dev.logs({ filter: "impeccable" })` for console results. Its Playwright `evaluate(...)` surface is read-only; do not rely on it for mutation.
+@@ -187,7 +187,7 @@
+ 2. **Pass the structured metadata** through `IMPECCABLE_CRITIQUE_META` (JSON), then run the write command:
+    ```bash
+    IMPECCABLE_CRITIQUE_META='{"target":"<user phrasing>","total_score":<n>,"p0_count":<n>,"p1_count":<n>}' \
+-     node .agents/skills/impeccable/scripts/critique-storage.mjs write <slug> <body-file>
++     node <skill-root>/scripts/critique-storage.mjs write <slug> <body-file>
+    ```
+    The helper prints the absolute path it wrote.
+ 
+@@ -195,7 +195,7 @@
+ 
+ 4. **Read the trend** for context:
+    ```bash
+-   node .agents/skills/impeccable/scripts/critique-storage.mjs trend <slug> 5
++   node <skill-root>/scripts/critique-storage.mjs trend <slug> 5
+    ```
+    This returns a JSON array of the last 5 frontmatter entries (including the one you just wrote).
+ 
+--- a/reference/init.md
++++ b/reference/init.md
+@@ -146,7 +146,7 @@
+ Otherwise:
+ 
+ 1. Write `.impeccable/live/config.json`. Choose `files` (the HTML entries the browser actually loads), `insertBefore`, and `commentSyntax` from the framework table in [live.md](live.md)'s **First-time setup** section, using the framework you found in Step 2. That table is canonical; do not restate it here. For multi-page static sites, prefer a glob (`["public/**/*.html"]`) over a literal list.
+-2. Run `node .agents/skills/impeccable/scripts/detect-csp.mjs`. If it reports a patchable shape (`append-arrays` / `append-string`), use the **consent prompt template** from live.md before editing any source file. On decline, skip the patch. For `middleware` / `meta-tag` shapes, surface the detected files and ask the user to add `http://localhost:8400` to `script-src` and `connect-src` manually. For `null`, there's nothing to do.
++2. Run `node <skill-root>/scripts/detect-csp.mjs`. If it reports a patchable shape (`append-arrays` / `append-string`), use the **consent prompt template** from live.md before editing any source file. On decline, skip the patch. For `middleware` / `meta-tag` shapes, surface the detected files and ask the user to add `http://localhost:8400` to `script-src` and `connect-src` manually. For `null`, there's nothing to do.
+ 3. Set `cspChecked: true` in the config once CSP is handled (patched, declined, manual, or not needed). The schema and per-shape patch details live in live.md's First-time setup; follow it rather than duplicating.
+ 
+ Writing the config file is harmless and needs no consent; only the CSP **source-file patch** requires a yes.
+--- a/reference/live.md
++++ b/reference/live.md
+@@ -32,7 +32,7 @@
+ ## Start
+ 
+ ```bash
+-node .agents/skills/impeccable/scripts/live.mjs
++node <skill-root>/scripts/live.mjs
+ ```
+ 
+ Output JSON: `{ ok, serverPort, serverToken, pageFiles, hasProduct, product, productPath, hasDesign, design, designPath }`. `pageFiles` is the list of HTML entries the live script was injected into. Keep PRODUCT.md and DESIGN.md in mind for variant generation; **DESIGN.md wins on visual decisions; PRODUCT.md wins on strategic/voice decisions.** When DESIGN.md is missing, identity is **not** absent; extract it from CSS variables, computed styles, and sibling components on the page (see Step 4 Phase A). Identity preservation is the default; departure from existing identity requires an explicit trigger from PRODUCT.md anti-references or the user's freeform prompt.
+@@ -47,7 +47,7 @@
+ 
+ ```
+ LOOP:
+-  node .agents/skills/impeccable/scripts/live-poll.mjs   # default long timeout; no --timeout=
++  node <skill-root>/scripts/live-poll.mjs   # default long timeout; no --timeout=
+   Read JSON; dispatch on "type"
+ 
+   "generate"  → Handle Generate; reply done; LOOP
+@@ -63,7 +63,7 @@
+ **Stream mode (experimental, not for Cursor):**
+ 
+ ```
+-node .agents/skills/impeccable/scripts/live-poll.mjs --stream   # stays running; one JSON line per event
++node <skill-root>/scripts/live-poll.mjs --stream   # stays running; one JSON line per event
+   Handle event; run --reply in a separate command
+   Repeat until "exit" line → Cleanup
+ ```
+@@ -77,9 +77,9 @@
+ Use these commands when the chat was interrupted, polling was missed, the helper restarted, or the browser reloaded:
+ 
+ ```bash
+-node .agents/skills/impeccable/scripts/live-status.mjs
+-node .agents/skills/impeccable/scripts/live-resume.mjs --id SESSION_ID
+-node .agents/skills/impeccable/scripts/live-complete.mjs --id SESSION_ID
++node <skill-root>/scripts/live-status.mjs
++node <skill-root>/scripts/live-resume.mjs --id SESSION_ID
++node <skill-root>/scripts/live-complete.mjs --id SESSION_ID
+ ```
+ 
+ - `live-status.mjs` prints connected helper state, active durable sessions, and queued pending events. It works even when the helper is down by reading the journal directly.
+@@ -104,7 +104,7 @@
+ 2. Run the insert helper instead of wrap:
+ 
+ ```bash
+-node .agents/skills/impeccable/scripts/live-insert.mjs --id EVENT_ID --count EVENT_COUNT --position after \
++node <skill-root>/scripts/live-insert.mjs --id EVENT_ID --count EVENT_COUNT --position after \
+   --element-id "ANCHOR_ID" --classes "class1,class2" --tag "section" --text "ANCHOR_TEXT"
+ ```
+ 
+@@ -135,7 +135,7 @@
+ ### 2. Wrap the element
+ 
+ ```bash
+-node .agents/skills/impeccable/scripts/live-wrap.mjs --id EVENT_ID --count EVENT_COUNT --element-id "ELEMENT_ID" --classes "class1,class2" --tag "div" --text "TEXT_SNIPPET"
++node <skill-root>/scripts/live-wrap.mjs --id EVENT_ID --count EVENT_COUNT --element-id "ELEMENT_ID" --classes "class1,class2" --tag "div" --text "TEXT_SNIPPET"
+ ```
+ 
+ Flag mapping. Keep them separate, don't collapse into `--query`:
+@@ -379,7 +379,7 @@
+ ### 8. Signal done
+ 
+ ```bash
+-node .agents/skills/impeccable/scripts/live-poll.mjs --reply EVENT_ID done --file RELATIVE_PATH
++node <skill-root>/scripts/live-poll.mjs --reply EVENT_ID done --file RELATIVE_PATH
+ ```
+ 
+ `RELATIVE_PATH` is relative to project root (`public/index.html`, `src/App.tsx`, etc.); the browser fetches source directly if the dev server lacks HMR.
+@@ -391,7 +391,7 @@
+ If wrap or generation fails after the browser has flipped to GENERATING (e.g. wrap landed on the wrong source branch and you've already reverted it, or generation hit an unrecoverable error), tell the **browser** so its bar resets to PICKING:
+ 
+ ```bash
+-node .agents/skills/impeccable/scripts/live-poll.mjs --reply EVENT_ID error "Short reason"
++node <skill-root>/scripts/live-poll.mjs --reply EVENT_ID error "Short reason"
+ ```
+ 
+ Don't run `live-accept --discard` for this; that's a pure file mutator, the browser doesn't see it, and the bar gets stuck on the GENERATING dots forever (the user has to refresh). `--discard` is only correct when the **browser** initiated the discard (user clicked ✕ during CYCLING) and the agent is just running source-side cleanup the browser already triggered.
+@@ -478,13 +478,13 @@
+ When finished:
+ 
+ ```bash
+-node .agents/skills/impeccable/scripts/live-poll.mjs --reply EVENT_ID steer_done ["Optional short note for a browser toast"]
++node <skill-root>/scripts/live-poll.mjs --reply EVENT_ID steer_done ["Optional short note for a browser toast"]
+ ```
+ 
+ On failure:
+ 
+ ```bash
+-node .agents/skills/impeccable/scripts/live-poll.mjs --reply EVENT_ID error "Short reason"
++node <skill-root>/scripts/live-poll.mjs --reply EVENT_ID error "Short reason"
+ ```
+ 
+ Then poll again immediately. Do not send a separate "picked up" reply. The Steer bar stays locked until `steer_done` or `error` arrives over SSE.
+@@ -512,7 +512,7 @@
+ 
+ If `repair` is present, the previous Apply changed source but final validation failed. Fix the current source and return the same canonical JSON result; do not roll files back yourself. The browser will ask the user before any rollback.
+ 
+-After source edits finish, reply exactly once with `node .agents/skills/impeccable/scripts/live-poll.mjs --reply EVENT_ID done --data '{"status":"done","appliedEntryIds":["8hexid"],"failed":[],"files":["src/page.html"],"notes":[]}'`. Use `status:"partial"` or `status:"error"` with `failed[]` when not every entry applied. Then poll again. Never reply without the event id; `--reply done --file ...` is invalid for manual Apply.
++After source edits finish, reply exactly once with `node <skill-root>/scripts/live-poll.mjs --reply EVENT_ID done --data '{"status":"done","appliedEntryIds":["8hexid"],"failed":[],"files":["src/page.html"],"notes":[]}'`. Use `status:"partial"` or `status:"error"` with `failed[]` when not every entry applied. Then poll again. Never reply without the event id; `--reply done --file ...` is invalid for manual Apply.
+ 
+ ## Exit
+ 
+@@ -526,7 +526,7 @@
+ ## Cleanup
+ 
+ ```bash
+-node .agents/skills/impeccable/scripts/live-server.mjs stop
++node <skill-root>/scripts/live-server.mjs stop
+ ```
+ 
+ Stops the HTTP server and runs `live-inject.mjs --remove` to strip `localhost:…/live.js` from the HTML entry. To stop the server but keep the inject tag (for a quick restart), use `stop --keep-inject`. `.impeccable/live/config.json` persists as project config for future sessions.
+@@ -612,7 +612,7 @@
+ Otherwise, run the detection helper:
+ 
+ ```bash
+-node .agents/skills/impeccable/scripts/detect-csp.mjs
++node <skill-root>/scripts/detect-csp.mjs
+ ```
+ 
+ Output: `{ shape, signals }` where `shape` is one of `append-arrays`, `append-string`, `middleware`, `meta-tag`, or `null`. The shape is named by *patch mechanism*, so one template covers many frameworks.
+--- a/reference/polish.md
++++ b/reference/polish.md
+@@ -37,8 +37,8 @@
+ 
+ 4. **Pull in any prior critique** (optional signal): If `$impeccable critique` has been run on the same target, its priority issues are a useful prior for what to address first. Resolve the target to a file path or URL, then:
+    ```bash
+-   slug=$(node .agents/skills/impeccable/scripts/critique-storage.mjs slug "<resolved>")
+-   node .agents/skills/impeccable/scripts/critique-storage.mjs latest "$slug"
++   slug=$(node <skill-root>/scripts/critique-storage.mjs slug "<resolved>")
++   node <skill-root>/scripts/critique-storage.mjs latest "$slug"
+    ```
+    Exit 0 with body = found; fold the P0/P1 items into your polish list and mention the snapshot path so the user sees what you read. Exit 2 = no snapshot, continue without it. The critique is one input among many. Do your own pass either way.
+ 
+--- a/scripts/context.mjs
++++ b/scripts/context.mjs
+@@ -1,8 +1,7 @@
+ /**
+  * Context loader: prints PRODUCT.md (and DESIGN.md if present) as one
+- * markdown block on stdout, or exits with empty stdout when no PRODUCT.md
+- * is found anywhere. The skill keys off "empty stdout" to branch into the
+- * init flow.
++ * markdown block on stdout, or reports NO_PRODUCT_MD without blocking a scoped
++ * UI task. Initialization is a separate, explicitly requested workflow.
+  *
+  * Path resolution (first match wins):
+  *   1. cwd, if PRODUCT.md or DESIGN.md is there
+@@ -169,12 +168,9 @@
+ 
+ function buildUpdateDirective(localVersion, latestVersion) {
+   return (
+-    `UPDATE_AVAILABLE: A newer Impeccable skill is available ` +
+-    `(installed v${localVersion}, latest v${latestVersion}). ` +
+-    `Before continuing, ask the user once: "A newer Impeccable (v${latestVersion}) is available. ` +
+-    `Update now? It runs \`npx impeccable skills update\`." ` +
+-    `If they agree, run \`npx impeccable skills update\` (the update applies to the next session, not this one). ` +
+-    `Either way, continue the current task without waiting, and do not raise this again.`
++    `UPDATE_AVAILABLE: Impeccable v${latestVersion} is available (local v${localVersion}). ` +
++    `This project copy has local patches. Continue the current task; when an update ` +
++    `is requested, use the owning project's patch-preserving maintenance process.`
+   );
+ }
+ 
+@@ -227,8 +223,8 @@
+     // — cheap models miss the empty case more often than the explicit one.
+     const parts = [
+       'NO_PRODUCT_MD: This project has no PRODUCT.md yet. ' +
+-      'Stop the current task, load reference/init.md, and follow its ' +
+-      'instructions to write PRODUCT.md before resuming.',
++      'For a scoped UI task, use the existing component, tokens and user brief. ' +
++      'Load reference/init.md only for explicit initialization or missing new-product context.',
+     ];
+     if (updateDirective) parts.push(updateDirective);
+     process.stdout.write(parts.join('\n\n---\n\n') + '\n');
