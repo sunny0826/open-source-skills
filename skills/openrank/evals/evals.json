@@ -1,29 +1,73 @@
 {
+  "schema_version": 1,
   "skill_name": "openrank",
   "evals": [
     {
-      "id": 1,
-      "prompt": "查询一下 X-lab2017/open-digger 的最新 OpenRank 数据和近期趋势",
-      "expected_output": "A Chinese summary report containing the latest Global OpenRank, Activity, Stars, Attention, and a brief trend analysis for the past 3-6 months. Output must not be a table.",
-      "files": []
+      "id": "pos-1",
+      "kind": "trigger",
+      "prompt": "查询 OpenDigger OpenRank 最近月份数据。",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Select openrank only for its own intended task."
+      ]
     },
     {
-      "id": 2,
-      "prompt": "What is the OpenRank and activity for torvalds/linux?",
-      "expected_output": "An English summary report containing the latest Global OpenRank, Activity, Stars, Attention, and a brief trend analysis. Output must not be a table.",
-      "files": []
+      "id": "pos-2",
+      "kind": "trigger",
+      "prompt": "Show OpenDigger issue_response_time for 2025Q4.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Select openrank only for its own intended task."
+      ]
     },
     {
-      "id": 3,
-      "prompt": "请用表格的形式展示 https://github.com/vuejs/core 在 2024 年度的全部指标数据全貌",
-      "expected_output": "A comprehensive Chinese Markdown table displaying all available metrics (Core, Developer, Issues, PRs) for the specific period '2024'. Unrecorded data should be marked as '-' or 'N/A'.",
-      "files": []
+      "id": "neg-1",
+      "kind": "trigger",
+      "prompt": "给这个 GitHub 项目整体质量打分。",
+      "should_trigger": false,
+      "files": [],
+      "expectations": [
+        "Do not select openrank for this adjacent task."
+      ]
     },
     {
-      "id": 4,
-      "prompt": "Show me all metrics for gitee/mindspore/mindspore in 2023-12 as a table.",
-      "expected_output": "A comprehensive English Markdown table displaying all available metrics (Core, Developer, Issues, PRs) for the specific period '2023-12'. Platform should be recognized as gitee.",
-      "files": []
+      "id": "neg-2",
+      "kind": "trigger",
+      "prompt": "修改仓库 README。",
+      "should_trigger": false,
+      "files": [],
+      "expectations": [
+        "Do not select openrank for this adjacent task."
+      ]
+    },
+    {
+      "id": "behavior-1",
+      "kind": "behavior",
+      "prompt": "Use the supplied OpenDigger fixtures to report issue_response_time avg for 2025Q4 and stars for 2025-12.",
+      "should_trigger": true,
+      "files": [
+        "evals/fixtures/issue_response_time.json",
+        "evals/fixtures/stars.json"
+      ],
+      "expectations": [
+        "Extracts avg value 6, not N/A, from nested timing data.",
+        "Preserves zero stars as a legitimate period value, not missing or cumulative total.",
+        "Labels duration statistic/unit and exact periods."
+      ]
+    },
+    {
+      "id": "behavior-2",
+      "kind": "behavior",
+      "prompt": "The OpenDigger endpoint returns HTTP 403 and the requested year is absent from a separate successful monthly series. Explain both results.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Distinguishes fetch_error from missing_period.",
+        "Does not sum monthly OpenRank/averages into an invented annual value.",
+        "Does not convert failure to zero."
+      ]
     }
   ]
 }

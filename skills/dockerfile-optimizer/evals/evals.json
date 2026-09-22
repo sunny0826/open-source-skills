@@ -1,17 +1,70 @@
 {
+  "schema_version": 1,
   "skill_name": "dockerfile-optimizer",
   "evals": [
     {
-      "id": 1,
-      "prompt": "帮我看看这个 Dockerfile 怎么优化，感觉体积太大了：\nFROM node:18\nCOPY . .\nRUN npm install\nCMD [\"npm\", \"start\"]",
-      "expected_output": "A Chinese optimization report. The rewritten Dockerfile should use a slim/alpine base image, copy `package.json` first before `npm install` for caching, use a non-root user, and suggest a `.dockerignore` file. The explanation should detail how these changes reduce size and improve build time.",
-      "files": []
+      "id": "pos-1",
+      "kind": "trigger",
+      "prompt": "优化这个 Dockerfile 的缓存。",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Select dockerfile-optimizer only for its own intended task."
+      ]
     },
     {
-      "id": 2,
-      "prompt": "Review this Dockerfile for a Go app:\nFROM golang:1.20\nWORKDIR /app\nCOPY . .\nRUN go build -o myapp\nCMD [\"./myapp\"]",
-      "expected_output": "An English optimization report. The rewritten Dockerfile MUST use a multi-stage build (compiling in a `golang` builder stage, and copying the binary into an `alpine` or `scratch` runtime stage). The explanation should focus on the massive size reduction from dropping the Go toolchain.",
-      "files": []
+      "id": "pos-2",
+      "kind": "trigger",
+      "prompt": "Review image size while keeping container runtime behavior.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Select dockerfile-optimizer only for its own intended task."
+      ]
+    },
+    {
+      "id": "neg-1",
+      "kind": "trigger",
+      "prompt": "排查 Kubernetes service 路由。",
+      "should_trigger": false,
+      "files": [],
+      "expectations": [
+        "Do not select dockerfile-optimizer for this adjacent task."
+      ]
+    },
+    {
+      "id": "neg-2",
+      "kind": "trigger",
+      "prompt": "给部署写 release notes。",
+      "should_trigger": false,
+      "files": [],
+      "expectations": [
+        "Do not select dockerfile-optimizer for this adjacent task."
+      ]
+    },
+    {
+      "id": "behavior-1",
+      "kind": "behavior",
+      "prompt": "Suggest a smaller image for a Go application built with CGO and a glibc shared library. It makes HTTPS calls and writes /var/cache/app as non-root. Docker is unavailable.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Does not blindly choose scratch/Alpine or claim a static binary.",
+        "Preserves shared libraries, CA certificates and writable-directory ownership.",
+        "Separates proposed improvements from unexecuted build/startup checks."
+      ]
+    },
+    {
+      "id": "behavior-2",
+      "kind": "behavior",
+      "prompt": "Review Dockerfile: FROM node:22-slim; COPY . /app; WORKDIR /app; RUN pnpm install; CMD [\"pnpm\",\"start\"]. A pnpm workspace lockfile and install scripts that read source are required.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Preserves package-manager and workspace/lockfile inputs.",
+        "Does not move install before necessary source without accounting for lifecycle scripts.",
+        "Does not claim measured speed/size improvement without measurements."
+      ]
     }
   ]
 }

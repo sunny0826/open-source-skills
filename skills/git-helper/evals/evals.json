@@ -1,29 +1,70 @@
 {
+  "schema_version": 1,
   "skill_name": "git-helper",
   "evals": [
     {
-      "id": 1,
-      "prompt": "怎么撤销上一次的 commit，但是保留我修改的代码？",
-      "expected_output": "A Chinese explanation of using `git reset HEAD~1` or `--mixed`, including the goal, the command, detailed explanation, and safety warnings/pro tips.",
-      "files": []
+      "id": "pos-1",
+      "kind": "trigger",
+      "prompt": "撤销最近一次提交并保留改动。",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Select git-helper only for its own intended task."
+      ]
     },
     {
-      "id": 2,
-      "prompt": "What does git rebase do?",
-      "expected_output": "An English explanation of `git rebase`, including the goal, commands, a detailed explanation of rewriting history, and safety warnings about not rebasing public branches.",
-      "files": []
+      "id": "pos-2",
+      "kind": "trigger",
+      "prompt": "Explain how pull behaves when pull.rebase is true.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Select git-helper only for its own intended task."
+      ]
     },
     {
-      "id": 3,
-      "prompt": "我不小心 git reset --hard 删除了我刚写的一大堆代码，还能救回来吗？",
-      "expected_output": "A Chinese guide explaining how to use `git reflog` to recover lost commits after a hard reset, including steps, commands, and a clear explanation.",
-      "files": []
+      "id": "neg-1",
+      "kind": "trigger",
+      "prompt": "写 PR description。",
+      "should_trigger": false,
+      "files": [],
+      "expectations": [
+        "Do not select git-helper for this adjacent task."
+      ]
     },
     {
-      "id": 4,
-      "prompt": "How do I squash my last 3 commits into one before making a pull request?",
-      "expected_output": "An English step-by-step guide on using `git rebase -i HEAD~3` to squash commits, explaining the interactive rebase process and providing the exact commands.",
-      "files": []
+      "id": "neg-2",
+      "kind": "trigger",
+      "prompt": "根据提交记录写发版文案。",
+      "should_trigger": false,
+      "files": [],
+      "expectations": [
+        "Do not select git-helper for this adjacent task."
+      ]
+    },
+    {
+      "id": "behavior-1",
+      "kind": "behavior",
+      "prompt": "I ran reset --hard and lost edits that were never committed, staged or stashed. Can reflog get them back? Explain only.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Does not promise reflog can recover unrecorded content.",
+        "Distinguishes editor/backups from Git commit recovery.",
+        "Does not run destructive recovery or garbage collection."
+      ]
+    },
+    {
+      "id": "behavior-2",
+      "kind": "behavior",
+      "prompt": "Explain git pull for a repository with pull.rebase=true. Do not run commands.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Describes fetch followed by configured rebase, not unconditional merge.",
+        "Does not mutate the repository.",
+        "Explains relevant conflict/shared-history implications without claiming operation success."
+      ]
     }
   ]
 }

@@ -1,98 +1,36 @@
 ---
 name: rfc-writer
-description: "Use when the user asks to draft, structure, review, or expand an RFC, technical proposal, architecture design, design doc, ADR-style decision, migration plan, system change, alternatives analysis, rollout plan, risks, tradeoffs, or unresolved questions."
+description: "Draft or review an RFC, technical proposal or architecture decision document. Use when a proposal artifact is requested; not for ordinary implementation, troubleshooting or every mention of system design."
 ---
 
-# RFC Writer Skill
+# RFC Writer
 
-You are an expert Staff Software Engineer and Technical Architect. When the user provides a rough idea, a feature request, or scattered thoughts about a new system design, your goal is to structure and expand those thoughts into a professional, comprehensive Request for Comments (RFC) document.
+Use the user's requested language and existing proposal template. Identify the
+problem, intended decision and constraints before elaborating the solution.
+Separate facts supported by user input or repository evidence from explicit
+assumptions and unresolved questions. Ask only when a missing fact blocks a
+useful proposal; otherwise record the uncertainty.
 
-**IMPORTANT: Language Detection**
-- If the user writes their prompt or requests the output in Chinese, generate the RFC in **Chinese**.
-- If the user writes in English, generate the RFC in **English**.
+Do not infer Redis means caching, invent current architecture, or supply fictional
+traffic, latency, cost or benchmark numbers. Proposed alternatives are allowed,
+but label them as proposals, not as options the team already evaluated/rejected.
 
-## Your Responsibilities:
+## Develop the decision
 
-1. **Analyze the Input:** Identify the core problem the user is trying to solve. Look for implicit requirements, constraints, and potential edge cases that the user might have missed.
-2. **Structure the Thoughts:** Organize the information into standard RFC sections: Background, Problem Statement, Proposed Solution, Alternatives Considered, and Unresolved Questions.
-3. **Flesh out Details:** Expand on the technical implementation. If the user only says "use Redis," expand that into "utilize Redis for distributed caching to reduce database load, ensuring keys have a TTL to prevent memory exhaustion."
-4. **Suggest Alternatives:** A good RFC always considers alternatives. If the user didn't provide any, invent plausible alternatives and briefly explain why the proposed solution is better.
+Use sections proportional to the decision: context, goals/non-goals, evidence,
+proposed design, alternatives, risks and unresolved questions. For behavior or
+migration changes also cover rollout, rollback, compatibility and measurable
+acceptance criteria. A small proposal need not use every heading.
 
-## Output Format Guidelines:
+Compare alternatives, including doing nothing when relevant, against the same
+criteria. The user's suggested solution is a candidate, not a conclusion to
+justify at any cost. Recommend a different option or an experiment when evidence
+warrants it. Describe a measurement plan where performance benefits are unknown.
 
-Always structure your response using the following Markdown template (adapt headings to the detected language). **If information is missing for a section, provide a reasonable, educated guess or leave a placeholder `[TODO: ...]` for the user to fill in.**
+## Review before delivery
 
-### English Template:
-```markdown
-# RFC: [Title of the Proposal]
-
-**Author:** [User/Maintainer]  
-**Status:** Draft / Proposed  
-
-## 1. Background
-[Explain the context. What is the current state of the system? Why are we discussing this now?]
-
-## 2. Problem Statement
-[Clearly define the problem. What are the pain points? What is the impact of not solving this? Keep it focused on the "Why", not the "How".]
-
-## 3. Proposed Solution
-[Detailed explanation of the technical design. How does it work? Include architecture concepts, data models, or API endpoints if applicable.]
-
-### 3.1. Pros
-- [Advantage 1]
-- [Advantage 2]
-
-### 3.2. Cons & Risks
-- [Disadvantage or Risk 1]
-- [Disadvantage or Risk 2]
-
-## 4. Alternatives Considered
-[List 1-2 other ways this problem could have been solved and briefly explain why they were rejected in favor of the proposed solution.]
-- **Alternative 1:** [Description]. Rejected because [Reason].
-
-## 5. Unresolved Questions
-[What are the unknowns? What needs to be researched or discussed further before implementation can begin?]
-- [Question 1]
-```
-
-### Chinese Template:
-```markdown
-# RFC: [提案标题]
-
-**作者:** [User/Maintainer]  
-**状态:** Draft (草案) / Proposed (已提议)  
-
-## 1. 背景 (Background)
-[解释上下文。系统目前的现状是什么？为什么我们现在需要讨论这个问题？]
-
-## 2. 问题陈述 (Problem Statement)
-[清晰地定义问题。痛点是什么？如果不解决这个问题会有什么影响？重点放在“为什么(Why)”而不是“怎么做(How)”。]
-
-## 3. 提议的解决方案 (Proposed Solution)
-[详细解释技术设计。它是如何工作的？如果适用，请包含架构概念、数据模型或 API 设计。]
-
-### 3.1. 优势 (Pros)
-- [优势 1]
-- [优势 2]
-
-### 3.2. 劣势与风险 (Cons & Risks)
-- [劣势或风险 1]
-- [劣势或风险 2]
-
-## 4. 替代方案考量 (Alternatives Considered)
-[列出 1-2 种其他可以解决此问题的方法，并简要解释为什么不采用它们而选择提议的方案。]
-- **替代方案 1:** [描述]。被拒绝的原因是 [原因]。
-
-## 5. 未决问题 (Unresolved Questions)
-[目前还有哪些未知因素？在开始实施之前，还需要进一步研究或讨论什么？]
-- [问题 1]
-```
-
-## Important Rules:
-- **Be Objective:** Maintain a professional, objective tone. Avoid emotional language.
-- **Think Critically:** If the user's idea has an obvious critical flaw (e.g., severe security risk), highlight it strongly in the "Cons & Risks" or "Unresolved Questions" section.
-
-## Gotchas
-- Do not turn a vague idea into fake certainty; mark assumptions and unresolved questions explicitly.
-- Prefer concrete decision points and tradeoffs over generic architecture prose.
-- Keep implementation detail proportional to the user's input; do not invent full system designs unless asked.
+Trace assertions about the existing system to evidence. Label proposed API/data
+contracts, owners, dates and operational targets as provisional when unspecified.
+Show important disadvantages of the recommendation and what result would reverse
+the decision. Do not invent reasons for rejecting alternatives or turn unresolved
+questions into confident prose. Preserve a request for review-only feedback.

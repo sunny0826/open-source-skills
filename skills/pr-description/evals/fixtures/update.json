@@ -1,0 +1,1 @@
+{"target": "https://github.com/example/project/pull/42", "authorization": "user explicitly approved title/body edit", "response": {"status": 403, "message": "Resource not accessible by integration"}}

@@ -1,160 +1,46 @@
 ---
 name: openrank
-description: "Use when the user asks for OpenRank, OpenDigger metrics, repository/developer activity, community OpenRank, stars/attention trends, contributor metrics, issue/PR metrics, or month/quarter/year metric tables for a GitHub or Gitee project/user."
+description: "Fetch OpenRank or OpenDigger repository/developer metrics for a specified period or trend. Not for generic repository quality reviews without an OpenDigger metric request."
 ---
 
-# OpenRank Skill
+# OpenRank
 
-You are an open-source metrics analyst powered by OpenDigger. When the user asks for OpenRank, activity, or other metrics of a repository or a developer, you will fetch the raw data from OpenDigger's OSS storage and present it clearly to the user.
+Use the user's language. Resolve platform (github/gitee), repository owner/name
+or developer login, metrics and requested month/quarter/year. For ambiguous
+repository versus developer names, clarify before constructing endpoints.
 
-## Data Source
-The OpenDigger data is stored in static JSON files on `oss.open-digger.cn`. 
-To fetch data, you should construct the URL based on the platform (`github` or `gitee`) and the repository or user name.
+## Read structured data
 
-**Repository Metrics URL Pattern:**
-`https://oss.open-digger.cn/{platform}/{owner}/{repo}/{metric_name}.json`
+Use the bundled standard-library helper from this Skill directory:
 
-**Developer Metrics URL Pattern:**
-`https://oss.open-digger.cn/{platform}/{login}/{metric_name}.json`
+```sh
+python3 scripts/metrics.py --platform github --target X-lab2017/open-digger --metrics openrank,activity --period latest --period-kind month
+python3 scripts/metrics.py --platform github --target X-lab2017/open-digger --metrics issue_response_time --period 2025Q4 --statistic avg
+```
 
-### Supported Metrics (`{metric_name}`)
+It needs Python 3.11+ and network access, no third-party packages. Use the host's
+configured Python environment. `--input-dir` reads offline JSON fixtures. Run
+`--help` for available options. `--all` queries the registry's applicable metrics,
+not a promise of every metric OpenDigger might publish. For metric definitions,
+units and applicability read [references/metrics.md](references/metrics.md).
 
-OpenDigger provides a wide range of metrics. The following are the supported metrics you can query:
+Data source: `https://oss.open-digger.cn/{platform}/{target}/{metric}.json`.
+Flat metrics contain period keys. Timing metrics contain avg/quantile series;
+levels is an array-valued distribution, not a scalar duration. Select the requested
+statistic and preserve its unit. Never infer absent years by adding OpenRank,
+ratios, averages or contributor counts. Monthly stars are period additions, not
+current cumulative GitHub stars.
 
-**Core Metrics:**
-- `openrank` (Global OpenRank / 全域 OpenRank)
-- `community_openrank` (Community OpenRank / 社区 OpenRank)
-- `activity` (Activity / 活跃度)
-- `stars` (Stars / 星标数)
-- `attention` (Attention / 关注度)
-- `technical_fork` (Technical Fork / 技术分叉)
+## Present and verify
 
-**Developer Metrics:**
-- `contributors` (Contributors / 贡献者)
-- `new_contributors` (New Contributors / 新贡献者)
-- `inactive_contributors` (Inactive Contributors / 不活跃的贡献者)
-- `participants` (Participants / 参与者)
-- `bus_factor` (Bus Factor / 核心贡献者缺席因素)
+Show target, exact observation period, metric/statistic/unit and source URL.
+Latest means latest available period of the selected kind; warn about differing
+latest periods rather than implying they describe the same month. For trends,
+request each actual period and state gaps; do not interpolate missing values.
+Use a table when requested or when comparing metrics; do not forbid tables.
 
-**Issue Metrics:**
-- `issues_new` (New Issues / 新问题)
-- `issues_closed` (Closed Issues / 已关闭的问题)
-- `issue_comments` (Issue Comments / 问题评论)
-- `issue_response_time` (Issue Response Time / 问题响应时间)
-- `issue_resolution_duration` (Issue Resolution Duration / 问题解决持续时间)
-- `issue_age` (Issue Age / 问题年龄)
-
-**Change Request (PR) Metrics:**
-- `change_requests` (Change Requests / 变更请求)
-- `change_requests_accepted` (Accepted Change Requests / 接受的变更请求)
-- `change_requests_reviews` (Change Request Reviews / 变更请求审查)
-- `change_request_response_time` (Change Request Response Time / 变更请求响应时间)
-- `change_request_resolution_duration` (Change Request Resolution Duration / 变更请求解决持续时间)
-- `change_request_age` (Change Request Age / 变更请求年龄)
-- `code_change_lines_add` (Code Change Lines Added / 代码新增行数)
-- `code_change_lines_remove` (Code Change Lines Removed / 代码移除行数)
-- `code_change_lines_sum` (Code Change Lines Sum / 代码总变更行数)
-
-## Instructions
-1. **Identify the target and scope**: Extract the platform (default to `github`), owner, and repo (or user login) from the user's input. Check if the user is asking for specific metrics, a specific time period (month, quarter, year), or **all metrics** for a given period.
-2. **Fetch Data**: Use `curl` or your tools to fetch the required JSON files from `oss.open-digger.cn`.
-   - *Example*: To get OpenRank for `X-lab2017/open-digger`, fetch `https://oss.open-digger.cn/github/X-lab2017/open-digger/openrank.json`.
-3. **Process Data**: The returned JSON contains key-value pairs where keys are dates (`YYYY`, `YYYY-MM`, or `YYYYQX`) and values are the metric scores. 
-   - If the user asks for a specific period, extract that exact key.
-   - If no period is specified, extract the **latest** available monthly and yearly data.
-   - If the user asks for historical trends, extract the last few months/years.
-4. **Format Output**: Present the data clearly. Use the language of the user's prompt (English or Chinese).
-
-## Output Format
-Your output must be structured and easy to read. Follow the format that matches the user's request.
-
-### Scenario A: Standard Request (Latest Metrics & Trends)
-If the user asks for general metrics or trends without specifying "all metrics for a specific period".
-
-#### Chinese Format:
-**项目/开发者：** `{platform}/{owner}/{repo}`
-
-**📊 核心指标数据 (最新)**
-- **全域 OpenRank:** [最新月份的数值] (时间: [对应月份])
-- **活跃度 (Activity):** [最新月份的数值] (时间: [对应月份])
-- *(如果适用)* **Stars:** [最新月份的数值]
-- *(如果适用)* **关注度 (Attention):** [最新月份的数值]
-
-**📈 近期趋势**
-简要描述过去 3-6 个月 OpenRank 或活跃度的变化趋势（例如：稳定增长、出现波动、近期下降等）。
-
-#### English Format:
-**Target:** `{platform}/{owner}/{repo}`
-
-**📊 Core Metrics (Latest)**
-- **Global OpenRank:** [Latest value] (Date: [Month])
-- **Activity:** [Latest value] (Date: [Month])
-- *(If applicable)* **Stars:** [Latest value]
-- *(If applicable)* **Attention:** [Latest value]
-
-**📈 Recent Trends**
-Briefly describe the trend of OpenRank or Activity over the past 3-6 months (e.g., steady growth, fluctuating, recent decline).
-
----
-
-### Scenario B: "All Metrics" for a Specific Period
-If the user explicitly asks for **all metrics** (全部指标) for a specific month, quarter, or year (e.g., "2023", "2023Q1", "2023-05"), you MUST output a Markdown table containing all available supported metrics for that exact period. 
-
-To do this, you must dynamically fetch all the endpoints listed in the **Supported Metrics** section (e.g., `openrank.json`, `activity.json`, `stars.json`, `contributors.json`, `issues_new.json`, `change_requests.json`, etc.) and extract the value for the requested period.
-
-#### Chinese Format:
-**项目/开发者：** `{platform}/{owner}/{repo}`
-**统计周期：** `[指定的周期，如 2023 或 2023-05]`
-
-| 指标大类 | 指标名称 (Metric) | 数据值 (Value) |
-| :--- | :--- | :--- |
-| **核心指标** | 全域 OpenRank (Global OpenRank) | [数值] |
-| | 社区 OpenRank (Community OpenRank) | [数值] |
-| | 活跃度 (Activity) | [数值] |
-| | Stars | [数值] |
-| | 技术分叉 (Technical Fork) | [数值] |
-| | 关注度 (Attention) | [数值] |
-| **开发者指标** | 贡献者 (Contributors) | [数值] |
-| | 新贡献者 (New Contributors) | [数值] |
-| | 参与者 (Participants) | [数值] |
-| | 核心贡献者缺席因素 (Bus Factor) | [数值] |
-| **问题 (Issues)** | 新问题 (New Issues) | [数值] |
-| | 已关闭的问题 (Closed Issues) | [数值] |
-| | 问题评论 (Issue Comments) | [数值] |
-| **变更请求 (PR)** | 变更请求 (Change Requests) | [数值] |
-| | 接受的变更请求 (Accepted CRs) | [数值] |
-| | 代码总变更行数 (Code Change Lines Sum) | [数值] |
-| *(依此类推)* | ... | ... |
-
-*(注：如果某项指标在该周期无数据，请填入 `-` 或 `N/A`)*
-
-#### English Format:
-**Target:** `{platform}/{owner}/{repo}`
-**Period:** `[Specified period, e.g., 2023 or 2023-05]`
-
-| Category | Metric | Value |
-| :--- | :--- | :--- |
-| **Core** | Global OpenRank | [Value] |
-| | Community OpenRank | [Value] |
-| | Activity | [Value] |
-| | Stars | [Value] |
-| | Technical Fork | [Value] |
-| | Attention | [Value] |
-| **Developer** | Contributors | [Value] |
-| | New Contributors | [Value] |
-| | Participants | [Value] |
-| | Bus Factor | [Value] |
-| **Issues** | New Issues | [Value] |
-| | Closed Issues | [Value] |
-| | Issue Comments | [Value] |
-| **Change Requests** | Change Requests | [Value] |
-| | Accepted Change Requests | [Value] |
-| | Code Change Lines Sum | [Value] |
-| *(And so on)* | ... | ... |
-
-*(Note: If a metric has no data for this period, insert `-` or `N/A`)*
-
-## Gotchas
-- OpenDigger JSON keys are period strings; verify whether the user requested a month, quarter, or year before selecting values.
-- If a metric endpoint is missing or a period has no value, show `-` or `N/A` rather than inventing a number.
-- Distinguish repository paths (`platform/owner/repo`) from developer paths (`platform/login`) before building URLs.
+Distinguish zero, missing_period, not_found, fetch_error, unsupported_shape and
+not_applicable. Keep partial results and explicitly list failures. Do not convert
+errors into zero or a generic N/A that hides an unavailable endpoint. If Python
+is unavailable, read JSON with another tool using the same shape/status rules;
+do not silently fall back to flat-date extraction for nested metrics.

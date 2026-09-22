@@ -1,23 +1,70 @@
 {
+  "schema_version": 1,
   "skill_name": "open-source-analysis",
   "evals": [
     {
-      "id": 1,
-      "prompt": "Analyze https://github.com/vuejs/core",
-      "expected_output": "An English analysis report for the Vue.js core repository, including Project Introduction, Tech Stack, Programming Language, Project Stats, License, Project Rating (Active Development, Documentation Quality, Community Activity, Ease of Use), and Overall Score.",
-      "files": []
+      "id": "pos-1",
+      "kind": "trigger",
+      "prompt": "评估这个开源项目是否值得采用。",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Select open-source-analysis only for its own intended task."
+      ]
     },
     {
-      "id": 2,
-      "prompt": "请帮我分析一下这个开源项目：https://github.com/ant-design/ant-design",
-      "expected_output": "A Chinese analysis report for the Ant Design repository, including 项目简介, 技术栈, 编程语言, 项目数据, 开源协议, 项目评分 (活跃度高, 文档完善, 社区活跃, 上手难度低), and 综合评分. NO English headings should be present.",
-      "files": []
+      "id": "pos-2",
+      "kind": "trigger",
+      "prompt": "Analyze maintenance and community health of this repository.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Select open-source-analysis only for its own intended task."
+      ]
     },
     {
-      "id": 3,
-      "prompt": "Analyze https://github.com/torvalds/linux",
-      "expected_output": "An English analysis report for the Linux Kernel repository, highlighting its massive community activity, C programming language, GPL-2.0 license, and extremely high stats. The structure should strictly follow the English template.",
-      "files": []
+      "id": "neg-1",
+      "kind": "trigger",
+      "prompt": "修复 https://github.com/example/repo 的测试失败。",
+      "should_trigger": false,
+      "files": [],
+      "expectations": [
+        "Do not select open-source-analysis for this adjacent task."
+      ]
+    },
+    {
+      "id": "neg-2",
+      "kind": "trigger",
+      "prompt": "为 https://github.com/example/repo/pull/2 写描述。",
+      "should_trigger": false,
+      "files": [],
+      "expectations": [
+        "Do not select open-source-analysis for this adjacent task."
+      ]
+    },
+    {
+      "id": "behavior-1",
+      "kind": "behavior",
+      "prompt": "Assess adoption suitability: the repo is mature with few commits this quarter; docs and release support are active. Stars API is rate limited. No benchmark has been run.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Does not equate low commit frequency with abandonment.",
+        "Marks stars unavailable and does not invent values.",
+        "Separates observed evidence from suitability judgments."
+      ]
+    },
+    {
+      "id": "behavior-2",
+      "kind": "behavior",
+      "prompt": "Compare two projects but only one README excerpt is available and no network tools work.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Reports asymmetric/insufficient evidence rather than inventing a numeric ranking.",
+        "Does not infer stack from name alone.",
+        "States what sources/time windows would be needed."
+      ]
     }
   ]
 }

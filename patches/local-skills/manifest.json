@@ -1,0 +1,101 @@
+[
+  {
+    "skill": "hue",
+    "original_project_path": ".agents/skills/hue",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "before_sha256": "642fbeb0babb8f5247c450d1690188fd445fcfbac1c648332bcf170afa18d6c5",
+        "after_sha256": "c590446060ac3a5bc94bc459ed0bc5da0d71738a7f56896c1c2ac502f8ec264b"
+      },
+      {
+        "path": "references/full-workflow.md",
+        "before_sha256": null,
+        "after_sha256": "8284f439da86f5b12276cf11833896ff2e7429ba1cbf0bbd9172b0dd4800cf9d"
+      }
+    ]
+  },
+  {
+    "skill": "impeccable",
+    "original_project_path": ".agents/skills/impeccable",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "before_sha256": "881f679f4c96b4cb38b6b9a4bfb8d78275fd2b54860c60c313ee094cb7b1a76a",
+        "after_sha256": "6e88980e9343146bbbc49c58e7ef1a67e59031bb7c15faa31e409e32756c0637"
+      },
+      {
+        "path": "agents/openai.yaml",
+        "before_sha256": "cbd8bd68fa00935dd0f179adb169252629cf7ee443ea9dc7db77e7ef2cf77446",
+        "after_sha256": "3f8f93351a067c093402ad44218c5c5f69f5cbf4e8a275ba4a9e93566bb870ec"
+      },
+      {
+        "path": "reference/critique.md",
+        "before_sha256": "9af4fc615c7d0c16cb983cf6fa822e7b2230231aa255bd817efe873dafef3ac3",
+        "after_sha256": "8ac9ae0e8ee5b1a910625c558c9b72a97a1b5a523a73495ca1f1b80d0798a0dc"
+      },
+      {
+        "path": "reference/init.md",
+        "before_sha256": "11d8fb70c525e02eda6333c5e55ee855e898c4992722c4cc4f066f7e1b3b25ef",
+        "after_sha256": "f21ebfd100e1f75acfae0371fd572681ca46747d48d327bca24fabebfbbac6b6"
+      },
+      {
+        "path": "reference/live.md",
+        "before_sha256": "f42d8e80cb98565edb893d725a57ee6400bfd4a0147aa4e44d844bc1f5a6dfe8",
+        "after_sha256": "e8152c8adeaae560da0c2ef3d4534b3c03033a2ef9bdbe287b4bbe706d8175e3"
+      },
+      {
+        "path": "reference/polish.md",
+        "before_sha256": "727673406646bb97ad7904d67ed63a18e155f2c0b7bb665ba6a5b093913508f6",
+        "after_sha256": "ffb60c167b3c24a4d7b4436a65505fd2617572c6eaa4f8f5d614ef4826647791"
+      },
+      {
+        "path": "scripts/context.mjs",
+        "before_sha256": "1272837087fe4deb7486ce833f3149bda8b21c4797bda04052009138d812d9af",
+        "after_sha256": "18a96a5ef942e6f6af6c4bca6735fdd6c91fbcb445ac2abc2a6e5ba3c2e9398e"
+      }
+    ]
+  },
+  {
+    "skill": "repo-skill-scaffolder",
+    "original_project_path": ".agents/skills/skill-creator",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "before_sha256": "d57b6e3a44535b9c0ef454dad5c86f5df78185fc80a65c7092885b4b5e10f81b",
+        "after_sha256": "33e9b366b6daae3b5e87078b6180377d6e9703d00d1ceba6bcfdb525a852450c"
+      },
+      {
+        "path": "references/authoring-guide.md",
+        "before_sha256": null,
+        "after_sha256": "9e77cbeee6dd6421ff145b499d617eb1368fd6af4711414d38682b4261cf9af1"
+      }
+    ]
+  },
+  {
+    "skill": "linear-design",
+    "original_project_path": "skills/linear-design",
+    "files": [
+      {
+        "path": "SKILL.md",
+        "before_sha256": "168b1db104f3eece0e8be1fd8e11b572192dc3ce1c1060942c9bb607edbf951d",
+        "after_sha256": "9e02b3c5d6a52fe4fa9b0bd83a9992877a3530092fb25e9cc26987eb944a6629"
+      },
+      {
+        "path": "design-model.yaml",
+        "before_sha256": "b41b0970fb253dd4a38ac848ff88131c2caf3823a2a2b07bcf892c21f377922c",
+        "after_sha256": "4c625d54beb8ef102f758e957335ca74c5712293d236ef38e31142f00f63d70b"
+      },
+      {
+        "path": "references/platform-mapping.md",
+        "before_sha256": "b2730706f67d58e42c8a34403e4e95562dc1df57efdbdd4d961e3873176c7cdf",
+        "after_sha256": "e409a546862f65bafa675d78032c23eb88355921700bab284667bb2e8098caef"
+      },
+      {
+        "path": "references/tokens.md",
+        "before_sha256": "36358e8048eb4e9abc4368f8dbd622b4480e8b204444dd91c75d5188269da518",
+        "after_sha256": "1e4b161e1160a6f4acfdc257871488aa3420000000ef9fa71a954f5fdf96d504"
+      }
+    ]
+  }
+]

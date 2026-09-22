@@ -1,17 +1,70 @@
 {
+  "schema_version": 1,
   "skill_name": "skill-architect",
   "evals": [
     {
-      "id": 1,
-      "prompt": "帮我把我们团队的发布检查流程整理成一个 Claude Code Skill，流程包括跑 CI、部署 canary、检查错误率、确认 smoke test、必要时回滚。",
-      "expected_output": "A Chinese Skill design proposal. It should identify CI/CD and deployment as the primary category, recommend a focused skill name, propose a folder structure, draft trigger-focused SKILL.md content with gotchas, validation steps, rollback guardrails, and suggest evals or scripts only where useful.",
-      "files": []
+      "id": "pos-1",
+      "kind": "trigger",
+      "prompt": "把发布检查流程整理成 Skill。",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Select skill-architect only for its own intended task."
+      ]
     },
     {
-      "id": 2,
-      "prompt": "Review this SKILL.md for quality: it says 'This skill helps with engineering tasks' and then lists generic advice like read the code, write tests, and be careful.",
-      "expected_output": "A review-style response with findings ordered by severity. It should flag the vague trigger description, overly broad scope, obvious low-signal body, missing gotchas, missing validation criteria, and recommend a narrower primary category plus concrete trigger phrases.",
-      "files": []
+      "id": "pos-2",
+      "kind": "trigger",
+      "prompt": "Review this SKILL.md trigger and evaluation design.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Select skill-architect only for its own intended task."
+      ]
+    },
+    {
+      "id": "neg-1",
+      "kind": "trigger",
+      "prompt": "执行现有 CI 发布流程。",
+      "should_trigger": false,
+      "files": [],
+      "expectations": [
+        "Do not select skill-architect for this adjacent task."
+      ]
+    },
+    {
+      "id": "neg-2",
+      "kind": "trigger",
+      "prompt": "创建 Linear 风格的设计语言。",
+      "should_trigger": false,
+      "files": [],
+      "expectations": [
+        "Do not select skill-architect for this adjacent task."
+      ]
+    },
+    {
+      "id": "behavior-1",
+      "kind": "behavior",
+      "prompt": "Review a Skill whose description says engineering help; it requires full reports for every code change and contains no checks. Propose focused fixes, do not create files.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Narrows task/trigger and includes near-miss negatives.",
+        "Does not invent known gotchas or add empty placeholders.",
+        "Respects review-only scope and distinguishes static checks from model tests."
+      ]
+    },
+    {
+      "id": "behavior-2",
+      "kind": "behavior",
+      "prompt": "Design a self-contained Skill for a repository distributed through Git and a Claude marketplace. The repo requires README.md and evals/evals.json. No generic skill-creator is installed.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Preserves repository README/eval conventions rather than deleting them.",
+        "Does not require .skill archive packaging or another installed Skill.",
+        "Includes resource resolution and isolated install validation."
+      ]
     }
   ]
 }

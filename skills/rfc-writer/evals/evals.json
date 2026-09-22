@@ -1,17 +1,70 @@
 {
+  "schema_version": 1,
   "skill_name": "rfc-writer",
   "evals": [
     {
-      "id": 1,
-      "prompt": "写一个 RFC：我们现在的发验证码接口太容易被刷了，我打算加一个 Redis 限流，同一个 IP 1分钟只能发1次",
-      "expected_output": "A Chinese RFC document using the structured template. It must expand the brief idea into Background (abuse of the SMS API), Problem Statement, Proposed Solution (Redis rate limiting, IP-based), Pros & Cons, and invent Alternatives (like CAPTCHAs or Device ID fingerprinting).",
-      "files": []
+      "id": "pos-1",
+      "kind": "trigger",
+      "prompt": "把这个想法写成 RFC。",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Select rfc-writer only for its own intended task."
+      ]
     },
     {
-      "id": 2,
-      "prompt": "Draft a technical proposal to migrate our frontend from Webpack to Vite to speed up the dev server.",
-      "expected_output": "An English RFC document outlining the migration to Vite. It should include the Background (Webpack is slow for large apps), the Solution, Pros/Cons, and Alternatives (like Turbopack or esbuild).",
-      "files": []
+      "id": "pos-2",
+      "kind": "trigger",
+      "prompt": "Review this architecture decision document.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Select rfc-writer only for its own intended task."
+      ]
+    },
+    {
+      "id": "neg-1",
+      "kind": "trigger",
+      "prompt": "修复 Redis 连接超时。",
+      "should_trigger": false,
+      "files": [],
+      "expectations": [
+        "Do not select rfc-writer for this adjacent task."
+      ]
+    },
+    {
+      "id": "neg-2",
+      "kind": "trigger",
+      "prompt": "直接实现这个新接口。",
+      "should_trigger": false,
+      "files": [],
+      "expectations": [
+        "Do not select rfc-writer for this adjacent task."
+      ]
+    },
+    {
+      "id": "behavior-1",
+      "kind": "behavior",
+      "prompt": "Draft an RFC: we are considering Redis. We have not decided the use case, traffic, architecture or latency targets.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Does not assert Redis is for caching/rate limiting or invent current architecture.",
+        "Labels assumptions and open decisions.",
+        "Suggests a decision/measurement process rather than declaring a performance win."
+      ]
+    },
+    {
+      "id": "behavior-2",
+      "kind": "behavior",
+      "prompt": "Review a proposal that says migrate to database X because it must be faster; there are no benchmarks.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Does not accept the claimed speedup as fact.",
+        "Compares alternatives with consistent criteria.",
+        "States a validation/rollback approach proportional to migration risk."
+      ]
     }
   ]
 }

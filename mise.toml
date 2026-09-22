@@ -1,0 +1,15 @@
+[tools]
+python = "3.14.2"
+node = "24.12.0"
+pnpm = "9.15.0"
+
+[tasks.check]
+description = "Validate Skills and run deterministic regression tests"
+run = ["python scripts/validate_skills.py", "python -m unittest discover -s tests -v"]
+
+[tasks."skills:check-local"]
+description = "Check project Skill entrypoints against source"
+run = "python scripts/check_local_skills.py"
+
+[tasks."website:build"]
+run = "pnpm --dir website build"

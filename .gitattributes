@@ -1,0 +1,2 @@
+# Unified-diff blank context lines contain a required single space.
+patches/local-skills/*.patch whitespace=-blank-at-eol

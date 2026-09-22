@@ -1,17 +1,72 @@
 {
+  "schema_version": 1,
   "skill_name": "contributor-guide-writer",
   "evals": [
     {
-      "id": 1,
-      "prompt": "帮我为当前项目写一份 CONTRIBUTING.md",
-      "expected_output": "A Chinese `CONTRIBUTING.md` document. It should include the standard sections (Local Setup, Workflow, PR process) and dynamically infer the package manager and run commands based on the local workspace (e.g., detecting `package.json` or `go.mod`).",
-      "files": []
+      "id": "pos-1",
+      "kind": "trigger",
+      "prompt": "为当前仓库生成 CONTRIBUTING.md。",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Select contributor-guide-writer only for its own intended task."
+      ]
     },
     {
-      "id": 2,
-      "prompt": "Generate a contributor guide for this Python project.",
-      "expected_output": "An English `CONTRIBUTING.md` document. It should outline Python-specific commands (like `pip install -r requirements.txt` or `pytest`) in the workflow section.",
-      "files": []
+      "id": "pos-2",
+      "kind": "trigger",
+      "prompt": "Update the contributor onboarding guide.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Select contributor-guide-writer only for its own intended task."
+      ]
+    },
+    {
+      "id": "neg-1",
+      "kind": "trigger",
+      "prompt": "运行现有测试。",
+      "should_trigger": false,
+      "files": [],
+      "expectations": [
+        "Do not select contributor-guide-writer for this adjacent task."
+      ]
+    },
+    {
+      "id": "neg-2",
+      "kind": "trigger",
+      "prompt": "修复 pnpm install 报错。",
+      "should_trigger": false,
+      "files": [],
+      "expectations": [
+        "Do not select contributor-guide-writer for this adjacent task."
+      ]
+    },
+    {
+      "id": "behavior-1",
+      "kind": "behavior",
+      "prompt": "Write CONTRIBUTING.md from the supplied fixture repository evidence. Do not run installation.",
+      "should_trigger": true,
+      "files": [
+        "evals/fixtures/repository.txt"
+      ],
+      "expectations": [
+        "Uses pnpm 9.15.0 and the actual dev/build scripts.",
+        "Does not invent a test command, Conventional Commits policy or Code of Conduct.",
+        "Uses master as the evidenced target branch."
+      ]
+    },
+    {
+      "id": "behavior-2",
+      "kind": "behavior",
+      "prompt": "Write setup instructions for a Python project; there are no manifests, CI files or existing docs available.",
+      "should_trigger": true,
+      "files": [],
+      "expectations": [
+        "Identifies missing setup evidence instead of inventing pip/pytest commands.",
+        "Asks for relevant project configuration or marks placeholders.",
+        "Does not claim setup was tested."
+      ]
     }
   ]
 }

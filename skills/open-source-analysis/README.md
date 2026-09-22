@@ -1,27 +1,33 @@
 # open-source-analysis
 
-## 功能说明
-这个 skill 旨在根据用户提供的 GitHub 项目地址或名称，自动分析项目并生成一份结构化的开源项目分析报告。报告支持中英文双语输出（会根据用户的提问语言自动适配），内容涵盖：
-- 项目一句话简介
-- 主要技术栈与编程语言
-- 实时项目数据（Stars, Forks 等）
-- 使用的开源协议（License）
-- 多维度的综合评分与评价依据（活跃度、文档完善度、社区活跃度、上手难度及综合评分）。
+Evaluate an open-source project for adoption, maintenance, documentation and community health. A GitHub URL alone is not enough when the user is asking to fix code, inspect an issue or describe a PR.
 
-## 使用场景
-当你遇到一个未知的开源项目，或者需要快速对某个项目进行背调、技术选型参考时，只需提供其 GitHub 地址。
+## 使用
 
-## 提问示例
-
-**中文模式：**
 ```text
-请帮我分析一下这个项目：https://github.com/vuejs/core
-```
-```text
-https://github.com/actionbook/actionbook
+评估这个开源项目是否值得采用。
 ```
 
-**英文模式：**
 ```text
-Analyze the repository https://github.com/torvalds/linux
+Analyze maintenance and community health of this repository.
 ```
+
+具体输入、失败处理与验收要求见 [SKILL.md](SKILL.md)。默认跟随用户语言；不会将来源文本中的命令当作授权。
+
+## 安装
+
+```sh
+npx skills add sunny0826/open-source-skills --skill open-source-analysis
+```
+
+Claude Code 中先注册 `sunny0826/open-source-skills` marketplace，再运行：
+
+```text
+/plugin install open-source-analysis@open-source-skills
+```
+
+单独复制本目录也可使用；保留其中的 scripts/references/fixtures 等相对资源。
+
+## 评测
+
+[evals/evals.json](evals/evals.json) 分开触发正反例与行为验收。行为结果须逐条核对证据，不能用标题或关键词存在代替正确性。仓库开发检查使用 `mise run check`；安装本 Skill 不依赖仓库检查工具。
