@@ -1,6 +1,6 @@
 [tools]
 python = "3.14.2"
-node = "24.12.0"
+node = "24.22.1"
 pnpm = "9.15.0"
 
 [tasks.check]
